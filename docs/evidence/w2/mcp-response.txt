@@ -1,0 +1,92 @@
+# GitHub MCP Server 연결 및 응답 증거
+
+## 1. 연결 설정 (.claude/settings.json)
+
+```json
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+## 2. 실제 MCP 서버 응답 출력 (JSON-RPC stdio)
+
+### [Initialize Request & Response]
+Request:
+{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"claude-code","version":"1.0.0"}}}
+
+Response:
+{"result":{"protocolVersion":"2024-11-05","capabilities":{"tools":{}},"serverInfo":{"name":"github-mcp-server","version":"0.6.2"}},"jsonrpc":"2.0","id":1}
+
+### [Tools List Response (일부 발췌)]
+Request:
+{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}
+
+Response:
+{
+  "result": {
+    "tools": [
+      {
+        "name": "search_code",
+        "description": "Search for code across GitHub repositories"
+      },
+      {
+        "name": "search_issues",
+        "description": "Search for issues and pull requests across GitHub repositories"
+      },
+      {
+        "name": "get_issue",
+        "description": "Get details of a specific issue in a GitHub repository"
+      },
+      {
+        "name": "get_pull_request",
+        "description": "Get details of a specific pull request"
+      },
+      {
+        "name": "list_pull_requests",
+        "description": "List and filter repository pull requests"
+      },
+      {
+        "name": "create_pull_request_review",
+        "description": "Create a review on a pull request"
+      },
+      {
+        "name": "merge_pull_request",
+        "description": "Merge a pull request"
+      },
+      {
+        "name": "get_pull_request_files",
+        "description": "Get the list of files changed in a pull request"
+      }
+    ]
+  },
+  "jsonrpc": "2.0",
+  "id": 2
+}
+
+---
+
+## 3. 연결 도구의 권한 범위 및 사람 승인 지점 (Human-in-the-Loop)
+
+### A. 읽기 전용 (Read-Only) 범위 - 자율 실행 허용
+- `search_code`, `search_issues`, `get_issue`, `get_pull_request`, `list_pull_requests`, `get_pull_request_files`
+- **정책**: 단순 조회 및 컨텍스트 수집 목적이므로 AI가 별도 사용자 승인 없이 자율적으로 실행할 수 있습니다.
+
+### B. 쓰기 / 변경 (Write / Mutate) 범위 - 안전망 적용
+- `create_pull_request_review`, `create_issue`
+- **정책**: 코멘트 및 리뷰 등록은 팀원과의 소통에 직접적인 영향을 미치므로 초안(Draft) 작성 후 사람 검토를 권장합니다.
+
+### C. 사람 승인 필수 (Human Approval Required) 지점
+- `merge_pull_request` (PR 병합)
+- `update_pull_request_branch` (베이스 브랜치 병합/리베이스)
+- **승인 기준**:
+  1. CI 파이프라인(빌드, 린트, E2E 테스트)이 모두 100% Green 통과 상태인지 확인
+  2. 최소 1명 이상의 인간 코드 리뷰어 승인이 완료되었는지 확인
+  3. AI 단독으로 프로덕션에 직접적인 영향을 주는 `main` 브랜치 병합을 자동 실행하지 못하도록 승인 프롬프트 필수 요구

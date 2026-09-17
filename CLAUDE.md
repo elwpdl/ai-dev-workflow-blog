@@ -78,7 +78,35 @@ npm test
 
 ---
 
-## 5. 변경 금지 경로 (Protected Paths)
+## 5. Git 협업 규칙 (브랜치, 커밋, PR)
+
+1. **브랜치 전략**:
+   - 모든 새로운 작업은 이슈를 먼저 생성한 후 해당 이슈 번호 기반의 브랜치에서 진행합니다.
+   - 브랜치 네이밍 규칙:
+     - 기능 개발: `feature/<이슈번호>-<슬러그>` (예: `feature/1-tag-filter`)
+     - 버그 수정: `fix/<이슈번호>-<슬러그>`
+     - 문서/기타: `docs/<슬러그>`, `chore/<슬러그>`
+
+2. **커밋 메시지 규약 (Conventional Commits)**:
+   - 형식: `<type>(<scope>): <description>`
+   - 허용 타입:
+     - `feat`: 새로운 기능 추가
+     - `fix`: 버그 수정
+     - `docs`: 문서 추가 및 수정
+     - `test`: 테스트 코드 추가 및 수정
+     - `refactor`: 프로덕션 코드 리팩토링
+     - `chore`: 빌드 업무, 패키지 매니저 설정 등
+   - 예시: `feat: add tag filtering UI and query parameter support (#1)`
+
+3. **PR(Pull Request) 규약**:
+   - GitHub CLI(`gh`)를 활용하여 PR을 생성 및 관리합니다.
+   - `.github/PULL_REQUEST_TEMPLATE.md` 형식을 충실히 준수하여 작성합니다.
+   - 반드시 관련 이슈를 본문에 연결합니다 (`Closes #<이슈번호>`).
+   - PR 제출 전 로컬에서 빌드, 린트, E2E 테스트 통과 증거를 본문에 포함해야 합니다.
+
+---
+
+## 6. 변경 금지 경로 (Protected Paths)
 
 AI 에이전트는 다음 경로의 파일을 수정하거나 삭제해서는 안 됩니다.
 
