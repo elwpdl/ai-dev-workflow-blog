@@ -1,0 +1,19 @@
+$ echo '{"tool_name": "FileEdit", "tool_input": {"file_path": ".github/workflows/ci.yml"}}' | bash .claude/hooks/pre-tool-use.sh
+========================================================
+[PreToolUse Hook 차단 발생] 변경이 거부되었습니다.
+대상 경로: .github/workflows/ci.yml
+차단 사유: CI/CD 워크플로우(.github/workflows/)는 채점 및 자동화 보호 경로입니다.
+프로젝트 헌법(CLAUDE.md)의 '5. 변경 금지 경로'를 확인하세요.
+========================================================
+[Process exited with exit code 2 (Blocked)]
+
+---
+
+$ echo '{"tool_name": "FileWrite", "tool_input": {"file_path": ".env.local"}}' | bash .claude/hooks/pre-tool-use.sh
+========================================================
+[PreToolUse Hook 차단 발생] 변경이 거부되었습니다.
+대상 경로: .env.local
+차단 사유: 환경 변수 및 보안 시크릿 파일(.env*)은 수정/생성이 금지되어 있습니다.
+프로젝트 헌법(CLAUDE.md)의 '5. 변경 금지 경로'를 확인하세요.
+========================================================
+[Process exited with exit code 2 (Blocked)]
