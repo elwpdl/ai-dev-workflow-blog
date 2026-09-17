@@ -1,0 +1,13 @@
+$ npm test tests/tag-filter.spec.ts
+
+> ai-dev-workflow-blog@1.0.0 test
+> playwright test tests/tag-filter.spec.ts
+
+
+Running 1 test using 1 worker
+
+     1 …) › 태그 버튼을 클릭하면 해당 태그가 포함된 포스트만 필터링되어 노출된다
+  ✓  1 … 버튼을 클릭하면 해당 태그가 포함된 포스트만 필터링되어 노출된다 (205ms)
+  1 passed (1.5s)
+
+[Process exited with exit code 0 (Test Passed - Green Phase)]

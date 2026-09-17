@@ -1,0 +1,38 @@
+$ npm test tests/tag-filter.spec.ts
+
+> ai-dev-workflow-blog@1.0.0 test
+> playwright test tests/tag-filter.spec.ts
+
+
+Running 1 test using 1 worker
+
+     1 …) › 태그 버튼을 클릭하면 해당 태그가 포함된 포스트만 필터링되어 노출된다
+  ✘  1 … 버튼을 클릭하면 해당 태그가 포함된 포스트만 필터링되어 노출된다 (5.2s)
+
+  1) tests/tag-filter.spec.ts:4:7 › 블로그 태그 필터링 기능 (Issue #1) › 태그 버튼을 클릭하면 해당 태그가 포함된 포스트만 필터링되어 노출된다 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-testid="tag-filter-bar"]')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('[data-testid="tag-filter-bar"]') with timeout 5000ms
+      - waiting for locator('[data-testid="tag-filter-bar"]')
+
+
+       9 |     // 1. 태그 필터 바가 존재하는지 확인
+      10 |     const tagFilterBar = page.locator('[data-testid="tag-filter-bar"]');
+    > 11 |     await expect(tagFilterBar).toBeVisible();
+         |                                ^
+      12 |
+      13 |     // 2. 'AI' 태그 버튼 클릭
+      14 |     const aiTagButton = page.locator('[data-testid="tag-btn-AI"]');
+        at /Users/dongjin/dev/study/ai-dev-workflow-blog/tests/tag-filter.spec.ts:11:32
+
+  1 failed
+    tests/tag-filter.spec.ts:4:7 › 블로그 태그 필터링 기능 (Issue #1) › 태그 버튼을 클릭하면 해당 태그가 포함된 포스트만 필터링되어 노출된다 
+
+[Process exited with exit code 1 (Test Failed - Red Phase)]

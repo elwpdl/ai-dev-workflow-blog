@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -e
+
+# ==============================================================================
+# Multi-Agent Universal Pre-Commit Safety Hook
+# (Enforced for Claude, Gemini, Codex, and Human Developers)
+# ==============================================================================
+
+# 1. Staged 파일 목록 확인
+STAGED_FILES=$(git diff --cached --name-only)
+
+# 2. 보호 경로 검사 (Protected Paths)
+for FILE in $STAGED_FILES; do
+  case "$FILE" in
+    *.env* | */.env*)
+      echo "❌ [Multi-Agent Safety Hook 차단] 환경 변수(.env*) 커밋이 거부되었습니다: $FILE" >&2
+      exit 1
+      ;;
+    .github/workflows/* | */.github/workflows/*)
+      echo "❌ [Multi-Agent Safety Hook 차단] CI/CD 워크플로우(.github/workflows/) 변경이 거부되었습니다: $FILE" >&2
+      exit 1
+      ;;
+    .git/* | */.git/*)
+      echo "❌ [Multi-Agent Safety Hook 차단] Git 메타데이터 변경이 거부되었습니다: $FILE" >&2
+      exit 1
+      ;;
+  esac
+done
+
+# 3. 린트 검사 자동 실행
+echo "🔍 [Multi-Agent Safety Hook] 커밋 전 코드 정적 분석(ESLint) 실행..."
+npm run lint
+
+echo "✅ [Multi-Agent Safety Hook 통과] 모든 안전성 및 코드 품질 검사를 통과했습니다."
+exit 0
