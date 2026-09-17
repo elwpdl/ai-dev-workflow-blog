@@ -1,0 +1,10 @@
+$ echo '{"tool_name": "FileEdit", "tool_input": {"file_path": "app/page.tsx"}}' | bash .claude/hooks/post-tool-use.sh
+--------------------------------------------------------
+[PostToolUse Hook] 파일 수정 후 자동 검사 시작
+수정 대상: app/page.tsx
+TypeScript/JavaScript 파일 수정 감지 -> npm run lint 실행 중...
+npm notice run ai-dev-workflow-blog@1.0.0 lint
+npm notice run eslint .
+[PostToolUse Hook 성공] 린트 검사를 통과했습니다 (exit code 0).
+--------------------------------------------------------
+[Process exited with exit code 0 (Success)]
