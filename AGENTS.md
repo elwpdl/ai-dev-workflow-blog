@@ -40,7 +40,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `lib/`: 비즈니스 로직 및 공통 유틸리티 (`posts.ts`)
 - `docs/`: 프로젝트 문서 및 평가 증거 자료 (`evidence/`)
 - `tests/`: Playwright E2E 테스트 시나리오 (`*.spec.ts`)
-- `.claude/`, `.gemini/`, `.codex/`: 에이전트별 특화 설정 및 스킬
+- `.claude/`: Claude Code 전용 설정 및 스킬 (settings.json, skills/, agents/, hooks/)
+- `CLAUDE.md`, `GEMINI.md`, `CODEX.md`: 에이전트별 루트 설정 파일
+- `.github/copilot-instructions.md`: GitHub Copilot 전용 지침
+- `.mcp.json`: 멀티 에이전트 공통 도구(MCP) 표준 설정
 
 ---
 
