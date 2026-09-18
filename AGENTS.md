@@ -46,7 +46,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `CLAUDE.md`: Claude Code 전용 루트 지침 파일
 - `GEMINI.md`: Google Gemini / Antigravity 전용 루트 지침 파일
 - `AGENTS.md`: OpenAI Codex 및 멀티 에이전트 공통 표준 헌법
-- `.github/copilot-instructions.md`: GitHub Copilot 전용 지침
+- `.github/`: GitHub Copilot 전용 지침 (copilot-instructions.md, prompts/new-post.prompt.md) 및 PR 템플릿
 - `.mcp.json`: 멀티 에이전트 공통 도구(MCP) 표준 설정
 
 ---
