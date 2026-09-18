@@ -1,0 +1,17 @@
+# OpenAI Codex Project Configuration
+
+[project]
+name = "ai-dev-workflow-blog"
+instructions = "AGENTS.md"
+
+[environment]
+node_version = "24.19.0"
+
+[tools]
+mcp_config = ".mcp.json"
+
+[commands]
+dev = "npm run dev"
+build = "npm run build"
+lint = "npm run lint"
+test = "npm test"
