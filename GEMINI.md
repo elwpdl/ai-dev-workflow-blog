@@ -8,8 +8,10 @@
 
 이 파일은 Google Gemini 및 Antigravity 에이전트를 위한 전용 가이드입니다. 기본 프로젝트 헌법은 `@AGENTS.md`를 상속합니다.
 
-### 1. 도구 및 MCP 사용 지침
-- Gemini는 프로젝트 루트의 `.mcp.json`에 정의된 MCP 서버(GitHub MCP 등)를 사용하여 저장소 컨텍스트를 탐색합니다.
+### 1. 도구, 스킬 및 MCP 사용 지침
+- **스킬**: `.agents/skills/new-post/SKILL.md`를 통해 새 블로그 포스트 생성 절차를 자동화합니다.
+- **안전망**: `.agents/hooks.json` 및 `scripts/`를 통해 파일 수정 전 보호 경로를 검증합니다.
+- **MCP**: 프로젝트 루트의 `.mcp.json`에 정의된 MCP 서버(GitHub MCP 등)를 사용하여 저장소 컨텍스트를 탐색합니다.
 - 파일 수정 전 `npm run lint`와 `npm test`를 통해 현재 상태를 파악하고, 작업 완료 후 반드시 `npm run build`를 실행하여 SSG 빌드를 확인합니다.
 
 ### 2. 보호 경로 및 안전 가이드라인

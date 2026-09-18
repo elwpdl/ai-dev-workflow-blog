@@ -1,0 +1,28 @@
+{
+  "safety-gate": {
+    "PreToolUse": [
+      {
+        "matcher": "write_to_file|replace_file_content|run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./scripts/pre-tool-use.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "lint-checker": {
+    "PostToolUse": [
+      {
+        "matcher": "write_to_file|replace_file_content",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./scripts/post-tool-use.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

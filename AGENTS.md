@@ -42,6 +42,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `tests/`: Playwright E2E 테스트 시나리오 (`*.spec.ts`)
 - `.claude/`: Claude Code 전용 설정 및 스킬 (settings.json, skills/, agents/, hooks/)
 - `.codex/`: OpenAI Codex 전용 설정 및 스킬 (config.toml, hooks.json, hooks/, skills/)
+- `.agents/`: Google Gemini / Antigravity 전용 설정 및 스킬 (hooks.json, scripts/, skills/)
 - `CLAUDE.md`: Claude Code 전용 루트 지침 파일
 - `GEMINI.md`: Google Gemini / Antigravity 전용 루트 지침 파일
 - `AGENTS.md`: OpenAI Codex 및 멀티 에이전트 공통 표준 헌법
