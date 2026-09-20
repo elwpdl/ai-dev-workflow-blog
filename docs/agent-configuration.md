@@ -44,7 +44,7 @@ MCP 등록 이름은 `repo-github`이며 기존 `@modelcontextprotocol/server-gi
 | Antigravity 2.0 MCP 발견 | 공통 MCP 형식을 제공하되 2.0 UI의 Installed MCP Servers에서 실제 로드를 확인해야 한다. CLI의 프로젝트 파일 발견과 동일하게 동작한다고 검증하지 않았다. |
 | Pre hook 허용 | Claude·Codex·Copilot의 빈 응답은 기존 권한 판단을 유지한다. Antigravity decision allow는 같은 의미의 권한 유보가 아니다. |
 | 플러그인 | 활성 커스텀 플러그인 없음. 이전 Antigravity 예시는 `docs/examples/antigravity-plugin.json`으로 이동했다. 패키징은 제품 간 호환되지 않는다. |
-| 저장·커밋 hook | 공통 onSave/preCommit 기능을 구성하지 않는다. 도구 호출 전후 hook과 완료 검증을 사용한다. Git hook은 설치하지 않는다. |
+| 저장·커밋 hook | 공통 onSave/preCommit 기능을 구성하지 않는다. 도구 호출 전후 hook과 완료 검증을 사용한다. 이번 설정 동기화에서 Git hook을 새로 설치하지 않았다. 기존 `.githooks/pre-commit`과 로컬 `core.hooksPath=.githooks`는 별도로 존재하며 커밋 전 보호 경로 검사와 린트를 실행한다. |
 
 ## Hook 파일과 실행 방식
 
@@ -125,7 +125,7 @@ Hook 테스트는 실제 설정의 명령을 하위 디렉터리에서 실행하
 상태까지 보장하지 않는다.
 
 설정 테스트는 스킬 복사본 일치, 네이티브 agent의 공통 역할 참조, MCP 등록과 launcher의
-토큰 우선순위를 검사한다. MCP는 가짜 npx로 검증하며 실제 GitHub API 호출을 하지 않는다.
+토큰 우선순위를 검사한다. 설정 단위 테스트의 MCP는 가짜 npx로 검증한다. 별도의 W2 실연결 검증에서는 공통 launcher로 초기화·도구 조회·GitHub 이슈 #1 읽기에 성공했다(`docs/evidence/w2/mcp-live-response.json`). 이는 각 제품 UI의 MCP 로드 검증과 구분한다.
 설치된 모든 제품에서 실제 agent 호출을 완료했다는 의미는 아니다. Claude/Copilot CLI 실행과
 Antigravity 2.0 UI 로드는 미검증이며, Codex의 프로젝트 신뢰·hook 신뢰도 사용자 환경에서 확인해야 한다.
 

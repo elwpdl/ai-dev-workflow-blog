@@ -1,35 +1,47 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("블로그 태그 필터링 기능 (Issue #1)", () => {
-  test("태그 버튼을 클릭하면 해당 태그가 포함된 포스트만 필터링되어 노출된다", async ({
-    page,
-  }) => {
+  test("전체 태그를 표시하고 AI 필터와 전체 목록 복원을 검증한다", async ({ page }) => {
     await page.goto("/");
+    const filterBar = page.getByTestId("tag-filter-bar");
+    await expect(filterBar).toBeVisible();
 
-    // 1. 태그 필터 바가 존재하는지 확인
-    const tagFilterBar = page.locator('[data-testid="tag-filter-bar"]');
-    await expect(tagFilterBar).toBeVisible();
-
-    // 2. 'AI' 태그 버튼 클릭
-    const aiTagButton = page.locator('[data-testid="tag-btn-AI"]');
-    await aiTagButton.click();
-
-    // 3. AI 관련 포스트만 노출되는지 확인
-    const postCards = page.locator(".post-card");
-    const count = await postCards.count();
-    expect(count).toBeGreaterThan(0);
-
-    // 모든 노출된 포스트가 'AI' 태그를 포함해야 함
-    for (let i = 0; i < count; i++) {
-      const card = postCards.nth(i);
-      await expect(card.locator(".tags")).toContainText("AI");
+    const cards = page.locator(".post-card");
+    const initialTitles = await cards.locator("h2").allTextContents();
+    const initialPosts = await cards.evaluateAll((elements) =>
+      elements.map((element) => ({
+        title: element.querySelector("h2")?.textContent ?? "",
+        tags: Array.from(element.querySelectorAll(".tag"), (tag) => tag.textContent ?? ""),
+      })),
+    );
+    expect(initialTitles.length).toBeGreaterThan(0);
+    const tags = [...new Set(initialPosts.flatMap((post) => post.tags))];
+    for (const tag of tags) {
+      await expect(page.getByTestId(`tag-btn-${tag.slice(1)}`)).toBeVisible();
     }
 
-    // 4. '전체' 버튼 클릭 시 모든 포스트 복원
-    const allButton = page.locator('[data-testid="tag-btn-ALL"]');
-    await allButton.click();
+    // 표시된 글 전체를 비교해 잘못 남거나 누락되는 글도 검출합니다.
+    const expectedTitles = initialPosts.filter((post) => post.tags.includes("#AI")).map((post) => post.title);
+    expect(expectedTitles.length).toBeGreaterThan(0);
+    expect(expectedTitles.length).toBeLessThan(initialTitles.length);
+    await page.getByTestId("tag-btn-AI").click();
+    await expect(cards.locator("h2")).toHaveText(expectedTitles);
 
-    const restoredCount = await page.locator(".post-card").count();
-    expect(restoredCount).toBeGreaterThan(count);
+    await page.getByTestId("tag-btn-ALL").click();
+    await expect(cards.locator("h2")).toHaveText(initialTitles);
+  });
+
+  test("선택한 태그를 다시 클릭하면 전체 목록과 순서가 복원된다", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByTestId("tag-filter-bar")).toBeVisible();
+    const titles = page.locator(".post-card h2");
+    const initialTitles = await titles.allTextContents();
+    const aiButton = page.getByTestId("tag-btn-AI");
+    await aiButton.click();
+    await expect(aiButton).toHaveClass(/active/);
+    await aiButton.click();
+    await expect(page.getByTestId("tag-btn-ALL")).toHaveClass(/active/);
+    await expect(aiButton).not.toHaveClass(/active/);
+    await expect(titles).toHaveText(initialTitles);
   });
 });

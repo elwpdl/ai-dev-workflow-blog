@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-09-20",
+  "baseCommit": "f0c9c969876c6b7e11e20d7ba2824bb064a533a7",
+  "redCommit": "07e9f23",
+  "sha256": {
+    "tests/tag-filter.spec.ts": "db29602c9b860f7a17c382a2f20dc0917ebe45347b2a5bd99ee093700661e365",
+    "app/components/TagFilterList.tsx": "fd5c6aeebe997c0c7f55b347d5792a4217e5b9552faa2fc4437b405fdf465461",
+    "scripts/github-mcp.sh": "ea6d0c448acd4bfb916b4c12d22d58083b33da09394833115cd42c03b7856059",
+    "docs/evidence/w2/playwright-before.txt": "ff4bef4d3f5172f2f7173dce50ea3706460af7135bd2963bfe2be42d862ff324",
+    "docs/evidence/w2/playwright-after.txt": "5ce574cfdce253ea1fc75bf3458b160853180672e30bdde69c6aa01a8b381faa",
+    "docs/evidence/w2/mcp-live-response.json": "b03e37639cc04c7633b2d7316816f76da369230750950db4875b2e07e3d6575a",
+    "docs/evidence/w2/validation.txt": "ed34456afd396e5f33ba50968bb04181a4cb7e9a7a9ff90b09878eb032d725b6"
+  }
+}

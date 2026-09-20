@@ -1,0 +1,9 @@
+{
+  "baseRefName": "main",
+  "body": "## 📌 관련 이슈\n- Closes #1\n\n## 📝 작업 내용\n- 블로그 홈 화면 상단에 태그 필터 바(`TagFilterList`) 컴포넌트 추가\n- 태그 클릭 시 해당 태그를 가진 포스트만 실시간 필터링 노출\n- '전체' 버튼 클릭 시 전체 포스트 목록 복원\n- Claude, Gemini, Codex 전 에이전트 공통 지원 설정(`AGENTS.md`, `GEMINI.md`, `CODEX.md`, `.mcp.json`, `.githooks/`) 추가\n\n## 🔍 구현 세부사항\n- `app/components/TagFilterList.tsx`: 클라이언트 컴포넌트로 분리하여 빠른 반응형 인터랙션 지원\n- `tests/tag-filter.spec.ts`: 구현 전 Red ❌ 및 구현 후 Green 🟢 E2E 검증 시나리오 확보\n- `.mcp.json`: GitHub MCP 연동 표준 명세\n- `.githooks/pre-commit`: 모든 에이전트 및 인간 개발자에 적용되는 공통 안전망 후크\n\n## 🧪 테스트 검증 결과 (Playwright E2E)\n- [x] 로컬 빌드 검증 (`npm run build`)\n- [x] 린트 검증 (`npm run lint`)\n- [x] E2E 회귀 테스트 통과 (`npm test`)\n\n## 📋 완료 조건 (DoD) 체크리스트\n- [x] 브랜치 네이밍 규칙 준수 (`feature/1-tag-filter`)\n- [x] 커밋 메시지 컨벤션 준수 (`feat:`)\n- [x] 불필요한 파일 또는 금지된 경로(`.env`, `.github/workflows`) 변경 없음",
+  "headRefName": "feature/1-tag-filter",
+  "mergeCommit": {
+    "oid": "39e1f0b63a5c2c44c06ad9306a7f558639cb2dc1"
+  },
+  "url": "https://github.com/elwpdl/ai-dev-workflow-blog/pull/2"
+}

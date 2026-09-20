@@ -1,92 +1,28 @@
-# GitHub MCP Server 연결 및 응답 증거
+# GitHub MCP 실제 연결 증거
 
-## 1. 연결 설정 (.claude/settings.json)
+확인일: 2026-09-20
+실제 응답 원본: mcp-live-response.json
 
-```json
-{
-  "mcpServers": {
-    "github": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
-      }
-    }
-  }
-}
-```
+실행 대상은 저장소 scripts/github-mcp.sh이며 JSON-RPC stdio로 직접 연결했다.
+initialize → notifications/initialized → tools/list → tools/call(get_issue)를 수행했다.
+서버: github-mcp-server 0.6.2 / 도구 26개 / elwpdl/ai-dev-workflow-blog 이슈 #1 조회 성공.
+클라이언트명은 w2-verification이다. Claude나 다른 제품 UI에서 연결한 기록으로 해석하지 않는다.
 
-## 2. 실제 MCP 서버 응답 출력 (JSON-RPC stdio)
+설정 경로:
+- Claude Code·Copilot CLI: .mcp.json
+- Codex: .codex/config.toml
+- Antigravity: .agents/mcp_config.json
+- 공통 등록 이름: repo-github
 
-### [Initialize Request & Response]
-Request:
-{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"claude-code","version":"1.0.0"}}}
+현재 셸에 GITHUB_TOKEN과 GITHUB_PERSONAL_ACCESS_TOKEN이 없어 기존 gh 인증을
+메모리에서 읽어 자식 프로세스의 GITHUB_TOKEN으로만 전달했다. 토큰은 파일과 로그에
+저장하지 않았다. 실제 CLI 사용 시 호스트 프로세스에도 해당 환경 변수를 제공해야 한다.
 
-Response:
-{"result":{"protocolVersion":"2024-11-05","capabilities":{"tools":{}},"serverInfo":{"name":"github-mcp-server","version":"0.6.2"}},"jsonrpc":"2.0","id":1}
-
-### [Tools List Response (일부 발췌)]
-Request:
-{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}
-
-Response:
-{
-  "result": {
-    "tools": [
-      {
-        "name": "search_code",
-        "description": "Search for code across GitHub repositories"
-      },
-      {
-        "name": "search_issues",
-        "description": "Search for issues and pull requests across GitHub repositories"
-      },
-      {
-        "name": "get_issue",
-        "description": "Get details of a specific issue in a GitHub repository"
-      },
-      {
-        "name": "get_pull_request",
-        "description": "Get details of a specific pull request"
-      },
-      {
-        "name": "list_pull_requests",
-        "description": "List and filter repository pull requests"
-      },
-      {
-        "name": "create_pull_request_review",
-        "description": "Create a review on a pull request"
-      },
-      {
-        "name": "merge_pull_request",
-        "description": "Merge a pull request"
-      },
-      {
-        "name": "get_pull_request_files",
-        "description": "Get the list of files changed in a pull request"
-      }
-    ]
-  },
-  "jsonrpc": "2.0",
-  "id": 2
-}
-
----
-
-## 3. 연결 도구의 권한 범위 및 사람 승인 지점 (Human-in-the-Loop)
-
-### A. 읽기 전용 (Read-Only) 범위 - 자율 실행 허용
-- `search_code`, `search_issues`, `get_issue`, `get_pull_request`, `list_pull_requests`, `get_pull_request_files`
-- **정책**: 단순 조회 및 컨텍스트 수집 목적이므로 AI가 별도 사용자 승인 없이 자율적으로 실행할 수 있습니다.
-
-### B. 쓰기 / 변경 (Write / Mutate) 범위 - 안전망 적용
-- `create_pull_request_review`, `create_issue`
-- **정책**: 코멘트 및 리뷰 등록은 팀원과의 소통에 직접적인 영향을 미치므로 초안(Draft) 작성 후 사람 검토를 권장합니다.
-
-### C. 사람 승인 필수 (Human Approval Required) 지점
-- `merge_pull_request` (PR 병합)
-- `update_pull_request_branch` (베이스 브랜치 병합/리베이스)
-- **승인 기준**:
-  1. CI 파이프라인(빌드, 린트, E2E 테스트)이 모두 100% Green 통과 상태인지 확인
-  2. 최소 1명 이상의 인간 코드 리뷰어 승인이 완료되었는지 확인
-  3. AI 단독으로 프로덕션에 직접적인 영향을 주는 `main` 브랜치 병합을 자동 실행하지 못하도록 승인 프롬프트 필수 요구
+권한 경계:
+- 읽기: search_code, search_issues, get_issue, get_pull_request 등 조회 작업.
+- 쓰기: create_issue, create_pull_request, create_pull_request_review 등 원격 상태 변경.
+- 사용자 명시적 지시 없이 쓰기·병합·브랜치 갱신을 수행하지 않는다.
+- 이번 검증은 get_issue만 호출했고 원격 상태를 변경하지 않았다.
+- MCP 등록 자체는 읽기 전용 ACL이나 승인 게이트가 아니다. 제공되는 쓰기 도구도
+  tools/list에 포함된다. 토큰 scope와 호스트 권한 정책으로 실제 접근을 제한해야 한다.
+- 사람 리뷰·CI 확인은 운영 절차이며 현재 MCP 설정이 이를 기계적으로 강제하지 않는다.

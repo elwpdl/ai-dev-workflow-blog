@@ -1,13 +1,30 @@
-$ npm test tests/tag-filter.spec.ts
+$ npm test
 
 > ai-dev-workflow-blog@1.0.0 test
-> playwright test tests/tag-filter.spec.ts
+> playwright test
 
+[WebServer] (node:82014) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:82016) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
 
-Running 1 test using 1 worker
+Running 4 tests using 4 workers
 
-     1 …) › 태그 버튼을 클릭하면 해당 태그가 포함된 포스트만 필터링되어 노출된다
-  ✓  1 … 버튼을 클릭하면 해당 태그가 포함된 포스트만 필터링되어 노출된다 (205ms)
-  1 passed (1.5s)
+(node:82042) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:82041) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:82040) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:82039) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 tests/blog.spec.ts:3:5 › 홈페이지에 블로그 제목과 포스트 목록이 렌더링된다 (514ms)
+  ✓  1 tests/tag-filter.spec.ts:4:7 › 블로그 태그 필터링 기능 (Issue #1) › 전체 태그를 표시하고 AI 필터와 전체 목록 복원을 검증한다 (609ms)
+  ✓  3 tests/tag-filter.spec.ts:34:7 › 블로그 태그 필터링 기능 (Issue #1) › 선택한 태그를 다시 클릭하면 전체 목록과 순서가 복원된다 (622ms)
+[WebServer] (node:82067) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  4 tests/blog.spec.ts:11:5 › 포스트 클릭 시 상세 페이지로 이동하고 마크다운 콘텐츠가 정상 표시된다 (867ms)
 
-[Process exited with exit code 0 (Test Passed - Green Phase)]
+  4 passed (2.7s)
+
+Exit code: 0

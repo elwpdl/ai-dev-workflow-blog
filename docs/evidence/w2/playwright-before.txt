@@ -1,38 +1,73 @@
-$ npm test tests/tag-filter.spec.ts
+Baseline: 07e9f23 (pre-feature), current tests copied without changes
+Server: npm run dev -- --webpack --port 3102
+$ ./node_modules/.bin/playwright test tests/tag-filter.spec.ts --config playwright.w2.config.ts
+[WebServer] (node:82631) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:82632) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
 
-> ai-dev-workflow-blog@1.0.0 test
-> playwright test tests/tag-filter.spec.ts
+Running 2 tests using 1 worker
+
+(node:82950) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 tests/tag-filter.spec.ts:4:7 › 블로그 태그 필터링 기능 (Issue #1) › 전체 태그를 표시하고 AI 필터와 전체 목록 복원을 검증한다 (5.5s)
+(node:83084) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 tests/tag-filter.spec.ts:34:7 › 블로그 태그 필터링 기능 (Issue #1) › 선택한 태그를 다시 클릭하면 전체 목록과 순서가 복원된다 (5.5s)
 
 
-Running 1 test using 1 worker
-
-     1 …) › 태그 버튼을 클릭하면 해당 태그가 포함된 포스트만 필터링되어 노출된다
-  ✘  1 … 버튼을 클릭하면 해당 태그가 포함된 포스트만 필터링되어 노출된다 (5.2s)
-
-  1) tests/tag-filter.spec.ts:4:7 › 블로그 태그 필터링 기능 (Issue #1) › 태그 버튼을 클릭하면 해당 태그가 포함된 포스트만 필터링되어 노출된다 
+  1) tests/tag-filter.spec.ts:4:7 › 블로그 태그 필터링 기능 (Issue #1) › 전체 태그를 표시하고 AI 필터와 전체 목록 복원을 검증한다 ───
 
     Error: expect(locator).toBeVisible() failed
 
-    Locator: locator('[data-testid="tag-filter-bar"]')
+    Locator: getByTestId('tag-filter-bar')
     Expected: visible
     Timeout: 5000ms
     Error: element(s) not found
 
     Call log:
-      - Expect "toBeVisible" locator('[data-testid="tag-filter-bar"]') with timeout 5000ms
-      - waiting for locator('[data-testid="tag-filter-bar"]')
+      - Expect "toBeVisible" getByTestId('tag-filter-bar') with timeout 5000ms
+      - waiting for getByTestId('tag-filter-bar')
 
 
-       9 |     // 1. 태그 필터 바가 존재하는지 확인
-      10 |     const tagFilterBar = page.locator('[data-testid="tag-filter-bar"]');
-    > 11 |     await expect(tagFilterBar).toBeVisible();
-         |                                ^
-      12 |
-      13 |     // 2. 'AI' 태그 버튼 클릭
-      14 |     const aiTagButton = page.locator('[data-testid="tag-btn-AI"]');
-        at /Users/dongjin/dev/study/ai-dev-workflow-blog/tests/tag-filter.spec.ts:11:32
+       5 |     await page.goto("/");
+       6 |     const filterBar = page.getByTestId("tag-filter-bar");
+    >  7 |     await expect(filterBar).toBeVisible();
+         |                             ^
+       8 |
+       9 |     const cards = page.locator(".post-card");
+      10 |     const initialTitles = await cards.locator("h2").allTextContents();
+        at /private/var/folders/h7/ckxpmwh56fsc_3_xtpqsqfzc0000gn/T/w2-red-pj9fg2l7/baseline/tests/tag-filter.spec.ts:7:29
 
-  1 failed
-    tests/tag-filter.spec.ts:4:7 › 블로그 태그 필터링 기능 (Issue #1) › 태그 버튼을 클릭하면 해당 태그가 포함된 포스트만 필터링되어 노출된다 
+    Error Context: test-results/tag-filter-블로그-태그-필터링-기능-I-b33e6--표시하고-AI-필터와-전체-목록-복원을-검증한다/error-context.md
 
-[Process exited with exit code 1 (Test Failed - Red Phase)]
+  2) tests/tag-filter.spec.ts:34:7 › 블로그 태그 필터링 기능 (Issue #1) › 선택한 태그를 다시 클릭하면 전체 목록과 순서가 복원된다 ────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('tag-filter-bar')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByTestId('tag-filter-bar') with timeout 5000ms
+      - waiting for getByTestId('tag-filter-bar')
+
+
+      34 |   test("선택한 태그를 다시 클릭하면 전체 목록과 순서가 복원된다", async ({ page }) => {
+      35 |     await page.goto("/");
+    > 36 |     await expect(page.getByTestId("tag-filter-bar")).toBeVisible();
+         |                                                      ^
+      37 |     const titles = page.locator(".post-card h2");
+      38 |     const initialTitles = await titles.allTextContents();
+      39 |     const aiButton = page.getByTestId("tag-btn-AI");
+        at /private/var/folders/h7/ckxpmwh56fsc_3_xtpqsqfzc0000gn/T/w2-red-pj9fg2l7/baseline/tests/tag-filter.spec.ts:36:54
+
+    Error Context: test-results/tag-filter-블로그-태그-필터링-기능-I-6a96c-태그를-다시-클릭하면-전체-목록과-순서가-복원된다/error-context.md
+
+  2 failed
+    tests/tag-filter.spec.ts:4:7 › 블로그 태그 필터링 기능 (Issue #1) › 전체 태그를 표시하고 AI 필터와 전체 목록 복원을 검증한다 ────
+    tests/tag-filter.spec.ts:34:7 › 블로그 태그 필터링 기능 (Issue #1) › 선택한 태그를 다시 클릭하면 전체 목록과 순서가 복원된다 ─────
+
+Exit code: 1
