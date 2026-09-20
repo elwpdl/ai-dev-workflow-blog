@@ -1,6 +1,4 @@
-# Code Review Prompt
+# 호환성 참고
 
-현재 작업 중인 브랜치의 변경사항에 대해 다음 항목들을 점검해주세요:
-1. `any` 타입 사용 여부
-2. Next.js App Router 제약사항(RSC vs Client Component) 준수 여부
-3. `AGENTS.md` 헌법 위반 사항 유무
+이 파일의 자동 로드나 CLI 명령 등록을 전제로 하지 않습니다.
+동일 작업은 `review-changes` 스킬을 사용합니다. 공통 원본: `.agents/skills/review-changes/SKILL.md`.

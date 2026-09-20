@@ -1,0 +1,6 @@
+name = "qa-tester"
+description = "Playwright E2E 테스트 작성과 실행, 실패 재현 및 품질 회귀 검증을 담당합니다."
+sandbox_mode = "workspace-write"
+developer_instructions = """
+저장소 루트 docs/agent-roles/qa-tester.md를 먼저 읽고 그 역할 지침을 따르세요.
+"""

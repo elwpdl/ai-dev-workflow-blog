@@ -1,0 +1,6 @@
+name = "reviewer"
+description = "코드 변경의 정확성, 회귀 위험, 테스트 누락과 AGENTS.md 준수 여부를 검토합니다."
+sandbox_mode = "read-only"
+developer_instructions = """
+저장소 루트 docs/agent-roles/reviewer.md를 먼저 읽고 그 역할 지침을 따르세요.
+"""

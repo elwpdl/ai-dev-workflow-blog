@@ -1,24 +1,27 @@
 {
-  "mcpServers": {
-    "github": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
-      }
-    }
-  },
   "hooks": {
     "PreToolUse": [
       {
         "matcher": "*",
-        "command": "bash .claude/hooks/pre-tool-use.sh"
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$(git rev-parse --show-toplevel)/.claude/hooks/pre-tool-use.sh\"",
+            "timeout": 10
+          }
+        ]
       }
     ],
     "PostToolUse": [
       {
         "matcher": "*",
-        "command": "bash .claude/hooks/post-tool-use.sh"
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$(git rev-parse --show-toplevel)/.claude/hooks/post-tool-use.sh\"",
+            "timeout": 120
+          }
+        ]
       }
     ]
   }

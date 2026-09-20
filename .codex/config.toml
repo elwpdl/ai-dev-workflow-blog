@@ -1,17 +1,8 @@
-# OpenAI Codex Project Configuration
+# 공통 스킬은 .agents/skills, 프로젝트 지침은 AGENTS.md에서 읽습니다.
+[features]
+hooks = true
 
-[project]
-name = "ai-dev-workflow-blog"
-instructions = "AGENTS.md"
-
-[environment]
-node_version = "24.19.0"
-
-[tools]
-mcp_config = ".mcp.json"
-
-[commands]
-dev = "npm run dev"
-build = "npm run build"
-lint = "npm run lint"
-test = "npm test"
+[mcp_servers.repo-github]
+command = "bash"
+args = ["-c", 'exec bash "$(git rev-parse --show-toplevel)/scripts/github-mcp.sh"']
+env_vars = ["GITHUB_TOKEN", "GITHUB_PERSONAL_ACCESS_TOKEN"]

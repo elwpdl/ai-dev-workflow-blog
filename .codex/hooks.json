@@ -3,13 +3,25 @@
     "PreToolUse": [
       {
         "matcher": "*",
-        "command": "bash .codex/hooks/pre-tool-use.sh"
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$(git rev-parse --show-toplevel)/.codex/hooks/pre-tool-use.sh\"",
+            "timeout": 10
+          }
+        ]
       }
     ],
     "PostToolUse": [
       {
         "matcher": "*",
-        "command": "bash .codex/hooks/post-tool-use.sh"
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$(git rev-parse --show-toplevel)/.codex/hooks/post-tool-use.sh\"",
+            "timeout": 120
+          }
+        ]
       }
     ]
   }

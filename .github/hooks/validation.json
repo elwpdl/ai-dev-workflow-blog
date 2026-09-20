@@ -1,3 +1,13 @@
 {
-  "preCommit": ["npm run lint", "npm test"]
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "type": "command",
+        "bash": "node \"$(git rev-parse --show-toplevel)/scripts/agent-hooks.mjs\" copilot pre",
+        "cwd": ".",
+        "timeoutSec": 10
+      }
+    ]
+  }
 }

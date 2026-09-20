@@ -1,21 +1,6 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
-# ==============================================================================
-# Google Gemini / Antigravity PostToolUse Hook
-# Contract:
-# - Input (stdin): JSON with stepIdx, tool error info, etc.
-# - Output (stdout): Expects an empty JSON object {}
-# ==============================================================================
-
-INPUT=$(cat)
-TARGET_PATH=$(echo "$INPUT" | grep -oE '"(TargetFile|file_path|path)":\s*"[^"]+"' | head -n 1 | cut -d'"' -f4 || true)
-
-case "$TARGET_PATH" in
-  *.ts | *.tsx | *.js | *.mjs)
-    npm run lint >/dev/null 2>&1 || true
-    ;;
-esac
-
-echo '{}'
-exit 0
+# Resolve from this script so hooks work from repository subdirectories.
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+exec node "$REPO_ROOT/scripts/agent-hooks.mjs" antigravity post

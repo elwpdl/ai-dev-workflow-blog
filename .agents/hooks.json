@@ -2,11 +2,12 @@
   "safety-gate": {
     "PreToolUse": [
       {
-        "matcher": "write_to_file|replace_file_content|run_command",
+        "matcher": "write_to_file|replace_file_content|multi_replace_file_content|run_command",
         "hooks": [
           {
             "type": "command",
-            "command": "./scripts/pre-tool-use.sh"
+            "command": "bash \"$(git rev-parse --show-toplevel)/.agents/scripts/pre-tool-use.sh\"",
+            "timeout": 10
           }
         ]
       }
@@ -15,11 +16,12 @@
   "lint-checker": {
     "PostToolUse": [
       {
-        "matcher": "write_to_file|replace_file_content",
+        "matcher": "write_to_file|replace_file_content|multi_replace_file_content",
         "hooks": [
           {
             "type": "command",
-            "command": "./scripts/post-tool-use.sh"
+            "command": "bash \"$(git rev-parse --show-toplevel)/.agents/scripts/post-tool-use.sh\"",
+            "timeout": 120
           }
         ]
       }

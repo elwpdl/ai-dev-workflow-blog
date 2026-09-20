@@ -10,7 +10,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # 프로젝트 헌법: AI Dev Workflow Blog (Multi-Agent Constitution)
 
-이 문서는 **Claude, Gemini, Codex(OpenAI)** 등 모든 AI 코딩 에이전트와 개발자가 본 저장소에서 작업을 수행할 때 반드시 준수해야 하는 공통 프로젝트 헌법입니다.
+이 문서는 Claude Code, Codex, Antigravity CLI·2.0, Copilot CLI와 개발자가 공유하는 프로젝트 규칙입니다. 도구별 진입 파일은 이 문서를 참조하며 별도 규칙을 중복 관리하지 않습니다.
 
 ---
 
@@ -40,14 +40,14 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `lib/`: 비즈니스 로직 및 공통 유틸리티 (`posts.ts`)
 - `docs/`: 프로젝트 문서 및 평가 증거 자료 (`evidence/`)
 - `tests/`: Playwright E2E 테스트 시나리오 (`*.spec.ts`)
-- `.claude/`: Claude Code 전용 설정 및 스킬 (settings.json, instructions/, agents/, skills/, prompts/, hooks/)
-- `.codex/`: OpenAI Codex 전용 설정 및 스킬 (config.toml, instructions/, agents/, skills/, prompts/, hooks/)
-- `.agents/`: Google Gemini / Antigravity 전용 설정 및 스킬 (hooks.json, instructions/, agents/, skills/, prompts/, hooks/)
+- `.claude/`: Claude Code 설정, rules, agents, skills, hooks
+- `.codex/`: Codex config.toml, TOML agents, hooks (프로젝트 스킬은 `.agents/skills/` 사용)
+- `.agents/`: 공유 스킬 원본 및 Antigravity CLI·2.0의 rules, agents, hooks, MCP 설정
 - `CLAUDE.md`: Claude Code 전용 루트 지침 파일
-- `GEMINI.md`: Google Gemini / Antigravity 전용 루트 지침 파일
+- `GEMINI.md`: Antigravity 호환용 안내 파일 (프로젝트 진입은 `.agents/rules/project.md`)
 - `AGENTS.md`: OpenAI Codex 및 멀티 에이전트 공통 표준 헌법
 - `.github/`: GitHub Copilot 전용 지침 (copilot-instructions.md, instructions/, agents/, skills/, prompts/, hooks/) 및 PR 템플릿
-- `.mcp.json`: 멀티 에이전트 공통 도구(MCP) 표준 설정
+- `.mcp.json`: Claude Code·Copilot CLI의 프로젝트 MCP 설정 (다른 도구의 경로는 `docs/agent-configuration.md` 참조)
 
 ---
 
@@ -128,3 +128,11 @@ Claude, Gemini, Codex를 포함한 **모든 AI 에이전트는 다음 경로를 
 1. `npm run build` 성공 (에러 0건)
 2. `npm run lint` 통과 (경고 및 에러 0건)
 3. `npm test`의 모든 Playwright E2E 시나리오 100% 통과
+
+## 8. 공통 작업 지침과 재사용 절차
+
+- `app/` 작업 전 `docs/agent-rules/frontend.md`를 읽습니다.
+- `lib/`, `app/api/` 작업 전 `docs/agent-rules/backend.md`를 읽습니다.
+- E2E 작성·검증은 `e2e-testing` 스킬과 `playwright.config.ts`를 확인합니다. 현재 테스트 서버는 `npm run dev`이며 프로덕션 서버로 가정하지 않습니다.
+- 모든 도구에서 `new-post`, `review-changes`, `e2e-testing` 스킬과 `reviewer`, `qa-tester` 역할을 사용합니다. 역할 지침 원본은 `docs/agent-roles/`에 있습니다.
+- 설정 변경 시 `npm run test:agent-config`와 `npm run test:hooks`도 실행합니다. 지원 범위와 적용 절차는 `docs/agent-configuration.md`를 참고합니다.
