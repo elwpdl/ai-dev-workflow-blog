@@ -1,0 +1,2 @@
+{"type": "review_context", "reviewType": "uncommitted", "currentBranch": "feature/5-w4-search", "baseBranch": "main", "workingDirectory": "."}
+{"type": "complete", "status": "review_completed", "findings": 0, "reviewedFiles": ["app/components/TagFilterList.tsx", "app/globals.css", "docs/evidence/w4/build.txt", "docs/evidence/w4/hooks.jsonl", "docs/evidence/w4/review-raw.tmp", "docs/prd.md", "tests/search.spec.ts"]}

@@ -1,0 +1,3 @@
+{"phase":"pre","invocation":"explicit adapter invocation, not host hook delivery","output":{},"status":0}
+{"phase":"protected-path-probe","writesPerformed":false,"output":{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"Protected path: use npm for lockfile changes; do not edit environment, Git metadata, or CI files."}},"status":0}
+{"phase":"post","invocation":"explicit adapter with real npm run lint","output":{},"status":0}

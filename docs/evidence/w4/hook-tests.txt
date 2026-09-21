@@ -1,0 +1,39 @@
+
+> ai-dev-workflow-blog@1.0.0 test:hooks
+> node --test scripts/agent-hooks.test.mjs
+
+✔ claude: block every protected path, including absolute and normalized paths (0.565458ms)
+✔ claude: permit source edits and reads without approving host permissions (0.305042ms)
+✔ claude: reject invalid inputs without leaking payload content (0.094041ms)
+✔ claude: inspect the actual shell command field (0.287541ms)
+✔ claude: lint only file mutations and surface lint failure (0.174417ms)
+✔ codex: block every protected path, including absolute and normalized paths (0.068041ms)
+✔ codex: permit source edits and reads without approving host permissions (0.057333ms)
+✔ codex: reject invalid inputs without leaking payload content (0.051333ms)
+✔ codex: inspect the actual shell command field (0.05025ms)
+✔ codex: lint only file mutations and surface lint failure (0.0685ms)
+✔ antigravity: block every protected path, including absolute and normalized paths (0.066875ms)
+✔ antigravity: permit source edits and reads without approving host permissions (0.111291ms)
+✔ antigravity: reject invalid inputs without leaking payload content (0.054541ms)
+✔ antigravity: inspect the actual shell command field (0.035209ms)
+✔ antigravity: lint only file mutations and surface lint failure (0.021416ms)
+✔ copilot: block every protected path, including absolute and normalized paths (0.0555ms)
+✔ copilot: permit source edits and reads without approving host permissions (0.053875ms)
+✔ copilot: reject invalid inputs without leaking payload content (0.056833ms)
+✔ copilot: inspect the actual shell command field (0.022ms)
+✔ copilot: lint only file mutations and surface lint failure (0.016458ms)
+✔ Codex: inspect all patch headers, including move destinations (0.173792ms)
+✔ resolve symlink ancestors and cwd before checking file writes (0.892959ms)
+✔ Copilot: accept object arguments and VS Code-compatible payloads (0.059958ms)
+✔ registered pre hooks run from a subdirectory and emit native denial JSON (138.482875ms)
+✔ registered post hooks preserve JSON stdout and report a real lint process failure (629.740333ms)
+✔ Markdown agents include discovery metadata and a substantive prompt (2.719208ms)
+✔ Copilot edit aliases deny protected paths (0.118458ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 816.780125

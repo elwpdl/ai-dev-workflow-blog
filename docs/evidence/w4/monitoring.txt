@@ -1,0 +1,24 @@
+
+> ai-dev-workflow-blog@1.0.0 test:monitoring
+> node --test scripts/monitoring-sanitizer.test.mjs && node scripts/verify-monitoring.mjs
+
+(node:16165) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://[repository]/lib/monitoring/sanitize-event.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to [repository]/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ remove request credentials, query values, user information and locals across all exceptions (0.558083ms)
+✔ handle events without optional request or stacktrace fields (0.0625ms)
+✔ remove navigation and HTTP breadcrumb query and fragment values without losing diagnostic fields (0.068125ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 55.870667
+PASS disabled probe returns 404
+PASS missing token keeps probe disabled
+PASS missing DSN returns 503 instead of reporting delivery
+PASS unauthorized requests send no events; authenticated probe delivers matching redacted exception
+Local SDK transport verification complete; Sentry dashboard ingestion remains a separate check.
