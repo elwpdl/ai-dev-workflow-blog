@@ -1,0 +1,21 @@
+services:
+  blog:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_SENTRY_DSN: ${NEXT_PUBLIC_SENTRY_DSN:-}
+        NEXT_PUBLIC_SENTRY_ENVIRONMENT: ${SENTRY_ENVIRONMENT:-local-docker}
+    image: ai-dev-workflow-blog:w3
+    ports:
+      - "127.0.0.1:3100:3000"
+    environment:
+      SENTRY_DSN: ${SENTRY_DSN:-}
+      SENTRY_ENVIRONMENT: ${SENTRY_ENVIRONMENT:-local-docker}
+      SENTRY_RELEASE: ${SENTRY_RELEASE:-}
+      SENTRY_TEST_ENABLED: ${SENTRY_TEST_ENABLED:-0}
+      SENTRY_TEST_TOKEN: ${SENTRY_TEST_TOKEN:-}
+    init: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true

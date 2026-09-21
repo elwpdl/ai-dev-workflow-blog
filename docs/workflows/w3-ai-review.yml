@@ -1,0 +1,36 @@
+# Reference only: .github/workflows is protected in the course repository.
+name: Request AI review
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: Pull request number in this repository
+        required: true
+        type: string
+permissions:
+  contents: read
+  pull-requests: write
+jobs:
+  request-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        env:
+          PR_NUMBER: ${{ inputs.pr_number }}
+        with:
+          script: |
+            const number = Number(process.env.PR_NUMBER);
+            if (!Number.isSafeInteger(number) || number <= 0) {
+              throw new Error('A positive PR number is required');
+            }
+            const { data: pr } = await github.rest.pulls.get({
+              ...context.repo, pull_number: number,
+            });
+            if (pr.state !== 'open' || pr.head.repo?.full_name !== `${context.repo.owner}/${context.repo.repo}`) {
+              throw new Error('Only open, same-repository pull requests are supported');
+            }
+            await github.rest.issues.createComment({
+              ...context.repo, issue_number: number, body: '@coderabbitai review',
+            });
+            await core.summary.addRaw('Review requested. Wait for the CodeRabbit response; this is not a merge approval.').write();

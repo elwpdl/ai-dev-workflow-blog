@@ -1,0 +1,135 @@
+--progress is a global compose flag, better use `docker compose --progress xx build ...
+ Image ai-dev-workflow-blog:w3 Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 678B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.11kB done
+#2 DONE 0.0s
+
+#3 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#3 DONE 0.9s
+
+#4 docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
+#4 resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32 0.0s done
+#4 CACHED
+
+#5 [internal] load metadata for docker.io/library/node:24.19.0-bookworm-slim
+#5 DONE 0.9s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 205B done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 DONE 0.0s
+
+#8 [dependencies 1/4] FROM docker.io/library/node:24.19.0-bookworm-slim@sha256:a9f5f7c91a432850b2a8a7797adf5eadb6c733ceed61167806cee7ea7fbc29df
+#8 resolve docker.io/library/node:24.19.0-bookworm-slim@sha256:a9f5f7c91a432850b2a8a7797adf5eadb6c733ceed61167806cee7ea7fbc29df 0.0s done
+#8 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 20.91kB done
+#7 DONE 0.0s
+
+#9 [dependencies 2/4] WORKDIR /app
+#9 CACHED
+
+#10 [dependencies 3/4] COPY package.json package-lock.json ./
+#10 DONE 0.1s
+
+#11 [dependencies 4/4] RUN npm ci
+#11 2.716 npm warn deprecated eslint@9.39.5: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+#11 12.34 
+#11 12.34 added 470 packages, and audited 471 packages in 12s
+#11 12.34 
+#11 12.34 153 packages are looking for funding
+#11 12.34   run `npm fund` for details
+#11 12.34 
+#11 12.34 found 0 vulnerabilities
+#11 12.34 npm warn allow-scripts 2 packages have install scripts not yet covered by allowScripts:
+#11 12.34 npm warn allow-scripts   @sentry/cli@2.58.6 (postinstall: node ./scripts/install.js)
+#11 12.34 npm warn allow-scripts   unrs-resolver@1.12.2 (postinstall: node postinstall.js)
+#11 12.34 npm warn allow-scripts
+#11 12.34 npm warn allow-scripts Run `npm approve-scripts --allow-scripts-pending` to review, or `npm approve-scripts <pkg>` to allow.
+#11 12.34 npm notice
+#11 12.34 npm notice New major version of npm available! 11.17.0 -> 12.0.2
+#11 12.34 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+#11 12.34 npm notice To update run: npm install -g npm@12.0.2
+#11 12.34 npm notice
+#11 DONE 13.1s
+
+#12 [builder 1/2] COPY . .
+#12 DONE 0.2s
+
+#13 [builder 2/2] RUN npm run build
+#13 0.186 
+#13 0.186 > ai-dev-workflow-blog@1.0.0 build
+#13 0.186 > next build
+#13 0.186 
+#13 0.354 ▲ Next.js 16.3.5 (Turbopack)
+#13 0.480 ✓ Running next.config.ts took 125ms
+#13 0.486 - Experiments (use with caution):
+#13 0.486   · clientTraceMetadata
+#13 0.486 
+#13 0.501   Creating an optimized production build ...
+#13 5.378 ✓ Compiled successfully in 4.7s
+#13 5.378   Running next.config.js provided runAfterProductionCompile ...
+#13 5.491 ✓ Completed runAfterProductionCompile in 113ms
+#13 5.502   Running TypeScript ...
+#13 6.503   Finished TypeScript in 1000ms ...
+#13 6.504   Collecting page data using 6 workers ...
+#13 6.749   Generating static pages using 6 workers (0/8) ...
+#13 7.081   Generating static pages using 6 workers (2/8) 
+#13 7.085   Generating static pages using 6 workers (4/8) 
+#13 7.085   Generating static pages using 6 workers (6/8) 
+#13 7.086 ✓ Generating static pages using 6 workers (8/8) in 337ms
+#13 7.088   Finalizing page optimization ...
+#13 7.148 
+#13 7.148 Route (app)
+#13 7.148 ┌ ○ /
+#13 7.148 ├ ○ /_not-found
+#13 7.148 ├ ƒ /api/monitoring-test
+#13 7.148 └   /blog/[slug]
+#13 7.148   ├ ● /blog/ai-driven-development
+#13 7.148   ├ ● /blog/getting-started
+#13 7.148   ├ ● /blog/hello-world
+#13 7.148   └ ● /blog/my-post
+#13 7.148 
+#13 7.148 
+#13 7.148 ○  (Static)   prerendered as static content
+#13 7.148 ●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+#13 7.148 ƒ  (Dynamic)  server-rendered on demand
+#13 7.148 
+#13 DONE 7.2s
+
+#14 [runner 3/6] COPY --from=builder --chown=node:node /app/.next/standalone ./
+#14 DONE 0.1s
+
+#15 [runner 4/6] COPY --from=builder --chown=node:node /app/.next/static ./.next/static
+#15 DONE 0.1s
+
+#16 [runner 5/6] COPY --from=builder --chown=node:node /app/public ./public
+#16 DONE 0.0s
+
+#17 [runner 6/6] COPY --from=builder --chown=node:node /app/content ./content
+#17 DONE 0.0s
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 0.7s done
+#18 exporting manifest sha256:bf04043bdfb9aa2a6f1d943d52c3a241c0de0dfb8f5e096ecd056255c5932f1a done
+#18 exporting config sha256:f5fc0f35bf2b2e1262889d60a393f4e87281b8489e32b9b8393746fddf5fa8b7 done
+#18 exporting attestation manifest sha256:5397dfa8d7792a0512f40e1a064971874f26fddc49b22f42b0d91cdaed8470ff 0.0s done
+#18 exporting manifest list sha256:6f39c4f29a9b894525680d158a2f5bd6847eaee0ad48264ed7526dcb40c41cf8 done
+#18 naming to docker.io/library/ai-dev-workflow-blog:w3 done
+#18 unpacking to docker.io/library/ai-dev-workflow-blog:w3
+#18 unpacking to docker.io/library/ai-dev-workflow-blog:w3 0.2s done
+#18 DONE 1.0s
+
+#19 resolving provenance for metadata file
+#19 DONE 0.0s
+ Image ai-dev-workflow-blog:w3 Built 
+
+Exit code: 0

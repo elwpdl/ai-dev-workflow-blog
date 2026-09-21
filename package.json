@@ -9,9 +9,12 @@
     "lint": "eslint .",
     "test": "playwright test",
     "test:hooks": "node --test scripts/agent-hooks.test.mjs",
-    "test:agent-config": "node --test scripts/agent-config.test.mjs"
+    "test:agent-config": "node --test scripts/agent-config.test.mjs",
+    "test:monitoring": "node --test scripts/monitoring-sanitizer.test.mjs && node scripts/verify-monitoring.mjs",
+    "test:container": "playwright test --config playwright.container.config.ts"
   },
   "dependencies": {
+    "@sentry/nextjs": "^10.75.0",
     "gray-matter": "^4.0.3",
     "marked": "^18.0.13",
     "next": "^16.3.5",

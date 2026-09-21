@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-09-21",
+  "source": "Docker production standalone app, authenticated POST /api/monitoring-test",
+  "organization": "djhobby",
+  "projectId": "4512119289151488",
+  "environment": "local-docker",
+  "result": {
+    "eventId": "131e86a47b164a9eb6b6a972a4e1b41b",
+    "flushed": true
+  },
+  "dashboardVerified": true,
+  "dashboardVerificationMethod": "Authenticated browser UI: matching event ID, exception message, local-docker environment, verification:w3 tag and w3-local-verification release",
+  "issueId": "7744130498",
+  "issueShortId": "JAVASCRIPT-NEXTJS-2",
+  "eventUrl": "https://djhobby.sentry.io/issues/7744130498/events/131e86a47b164a9eb6b6a972a4e1b41b/",
+  "probeDisabledAfterVerification": true,
+  "timezone": "Asia/Seoul",
+  "reviewedBuildEvent": {
+    "result": {
+      "eventId": "acb2f5ec437d46878c356e24de313c9b",
+      "flushed": true
+    },
+    "release": "w3-reviewed-verification",
+    "dashboardVerified": true,
+    "eventUrl": "https://djhobby.sentry.io/issues/7744130498/events/acb2f5ec437d46878c356e24de313c9b/"
+  }
+}

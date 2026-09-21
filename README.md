@@ -86,3 +86,15 @@ ai-dev-workflow-blog/
 ├── tsconfig.json         # TypeScript 컴파일러 설정
 └── README.md
 ```
+
+## W3 컨테이너와 오류 관측
+
+```bash
+docker compose up --build -d
+npm run test:container
+```
+
+앱: http://127.0.0.1:3100. 컨테이너는 production standalone 서버를 비루트 사용자로 실행합니다.
+Sentry 연결, 무료 운영 범위, 환경 변수와 검증 방법은 [관측 문서](docs/w3-observability.md),
+실제 검증 결과는 [W3 증거](docs/evidence/w3/README.md)를 참고합니다.
+컨테이너를 멈추려면 `docker compose stop`을 사용합니다.

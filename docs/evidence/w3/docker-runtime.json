@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-09-21",
+  "http": [
+    {
+      "path": "/",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/...css",
+      "status": 200
+    },
+    {
+      "path": "/blog/hello-world",
+      "status": 200
+    },
+    {
+      "path": "/blog/does-not-exist",
+      "status": 404
+    },
+    {
+      "path": "POST /api/monitoring-test (disabled)",
+      "status": 404
+    }
+  ],
+  "uid": "1000",
+  "health": "healthy"
+}
