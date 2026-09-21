@@ -33,3 +33,13 @@
 - 리뷰 실행 당시 나열된 파일만 CLI 검토 범위다. 이후 증거·회고 문서가 추가됐으며
   이들을 모두 AI가 승인했다는 의미가 아니다. GitHub 리뷰와 병합 상태는 통합 PR에서 확인한다.
 - 유료 크레딧, 신규 의존성, 보호 CI 파일 변경 없음. 선택 과제인 신규 CI/CD 배포는 미수행이다.
+
+## 통합 PR 및 병합 증거
+
+[PR #8](https://github.com/elwpdl/ai-dev-workflow-blog/pull/8)이 #5·#6·#7을
+`Closes`로 연결한다. 병합 완료의 기준은 PR의 `state=MERGED`, `mergedAt`, `mergeCommit`이다.
+TASK.md의 W4 체크는 이 통합 PR이 병합된 상태를 기준으로 한다.
+
+GitHub App의 최초 자동 리뷰는 저장소 별 개수 조건으로 건너뛰었다.
+이는 리뷰 완료 증거가 아니며 CLI의 실제 완료 결과와 구분한다.
+Git 커밋 시 저장소 pre-commit Hook의 ESLint 실행과 성공도 실제 확인했다.
