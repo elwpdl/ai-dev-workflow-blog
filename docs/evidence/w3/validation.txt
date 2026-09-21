@@ -4,22 +4,22 @@ $ npm run build
 > next build
 
 ▲ Next.js 16.3.5 (Turbopack)
-✓ Running next.config.ts took 108ms
+✓ Running next.config.ts took 202ms
 - Experiments (use with caution):
   · clientTraceMetadata
 
   Creating an optimized production build ...
-✓ Compiled successfully in 248ms
+✓ Compiled successfully in 1173ms
   Running next.config.js provided runAfterProductionCompile ...
-✓ Completed runAfterProductionCompile in 70ms
+✓ Completed runAfterProductionCompile in 69ms
   Running TypeScript ...
-  Finished TypeScript in 801ms ...
+  Finished TypeScript in 821ms ...
   Collecting page data using 6 workers ...
   Generating static pages using 6 workers (0/8) ...
-  Generating static pages using 6 workers (2/8) 
-  Generating static pages using 6 workers (4/8) 
-  Generating static pages using 6 workers (6/8) 
-✓ Generating static pages using 6 workers (8/8) in 430ms
+  Generating static pages using 6 workers (2/8)
+  Generating static pages using 6 workers (4/8)
+  Generating static pages using 6 workers (6/8)
+✓ Generating static pages using 6 workers (8/8) in 325ms
   Finalizing page optimization ...
 
 Route (app)
@@ -53,20 +53,21 @@ $ npm run test:monitoring
 > ai-dev-workflow-blog@1.0.0 test:monitoring
 > node --test scripts/monitoring-sanitizer.test.mjs && node scripts/verify-monitoring.mjs
 
-(node:96205) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://[repository]/lib/monitoring/sanitize-event.ts is not specified and it doesn't parse as CommonJS.
+(node:40612) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://[repository]/lib/monitoring/sanitize-event.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to [repository]/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
-✔ remove request credentials, query values, user information and locals across all exceptions (0.673334ms)
-✔ handle events without optional request or stacktrace fields (0.07875ms)
-ℹ tests 2
+✔ remove request credentials, query values, user information and locals across all exceptions (0.5655ms)
+✔ handle events without optional request or stacktrace fields (0.069625ms)
+✔ remove navigation and HTTP breadcrumb query and fragment values without losing diagnostic fields (0.072833ms)
+ℹ tests 3
 ℹ suites 0
-ℹ pass 2
+ℹ pass 3
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 56.406125
+ℹ duration_ms 53.33575
 PASS disabled probe returns 404
 PASS missing token keeps probe disabled
 PASS missing DSN returns 503 instead of reporting delivery
@@ -80,13 +81,13 @@ $ npm run test:agent-config
 > ai-dev-workflow-blog@1.0.0 test:agent-config
 > node --test scripts/agent-config.test.mjs
 
-✔ shared skill new-post has matching provider copies (2.357708ms)
-✔ shared skill review-changes has matching provider copies (0.479ms)
-✔ shared skill e2e-testing has matching provider copies (0.359417ms)
-✔ reviewer references an existing common role on every provider (0.86575ms)
-✔ qa-tester references an existing common role on every provider (0.66175ms)
-✔ MCP registrations share one launcher (0.708084ms)
-✔ MCP launcher rejects missing credentials and forwards token precedence without printing tokens (283.215708ms)
+✔ shared skill new-post has matching provider copies (3.984875ms)
+✔ shared skill review-changes has matching provider copies (0.484542ms)
+✔ shared skill e2e-testing has matching provider copies (0.354416ms)
+✔ reviewer references an existing common role on every provider (0.73275ms)
+✔ qa-tester references an existing common role on every provider (0.604917ms)
+✔ MCP registrations share one launcher (0.543416ms)
+✔ MCP launcher rejects missing credentials and forwards token precedence without printing tokens (432.029708ms)
 ℹ tests 7
 ℹ suites 0
 ℹ pass 7
@@ -94,7 +95,7 @@ $ npm run test:agent-config
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 335.955042
+ℹ duration_ms 480.858541
 
 Exit code: 0
 
@@ -103,33 +104,33 @@ $ npm run test:hooks
 > ai-dev-workflow-blog@1.0.0 test:hooks
 > node --test scripts/agent-hooks.test.mjs
 
-✔ claude: block every protected path, including absolute and normalized paths (0.701083ms)
-✔ claude: permit source edits and reads without approving host permissions (0.378125ms)
-✔ claude: reject invalid inputs without leaking payload content (0.115917ms)
-✔ claude: inspect the actual shell command field (0.273542ms)
-✔ claude: lint only file mutations and surface lint failure (0.164167ms)
-✔ codex: block every protected path, including absolute and normalized paths (0.068ms)
-✔ codex: permit source edits and reads without approving host permissions (0.06075ms)
-✔ codex: reject invalid inputs without leaking payload content (0.047167ms)
-✔ codex: inspect the actual shell command field (0.05175ms)
-✔ codex: lint only file mutations and surface lint failure (0.072792ms)
-✔ antigravity: block every protected path, including absolute and normalized paths (0.073583ms)
-✔ antigravity: permit source edits and reads without approving host permissions (0.107917ms)
-✔ antigravity: reject invalid inputs without leaking payload content (0.054208ms)
-✔ antigravity: inspect the actual shell command field (0.050292ms)
-✔ antigravity: lint only file mutations and surface lint failure (0.028708ms)
-✔ copilot: block every protected path, including absolute and normalized paths (0.0635ms)
-✔ copilot: permit source edits and reads without approving host permissions (0.050584ms)
-✔ copilot: reject invalid inputs without leaking payload content (0.062416ms)
-✔ copilot: inspect the actual shell command field (0.029625ms)
-✔ copilot: lint only file mutations and surface lint failure (0.022833ms)
-✔ Codex: inspect all patch headers, including move destinations (0.206708ms)
-✔ resolve symlink ancestors and cwd before checking file writes (0.687416ms)
-✔ Copilot: accept object arguments and VS Code-compatible payloads (0.040541ms)
-✔ registered pre hooks run from a subdirectory and emit native denial JSON (182.158375ms)
-✔ registered post hooks preserve JSON stdout and report a real lint process failure (357.881042ms)
-✔ Markdown agents include discovery metadata and a substantive prompt (2.38475ms)
-✔ Copilot edit aliases deny protected paths (0.132166ms)
+✔ claude: block every protected path, including absolute and normalized paths (0.533ms)
+✔ claude: permit source edits and reads without approving host permissions (0.278458ms)
+✔ claude: reject invalid inputs without leaking payload content (0.091291ms)
+✔ claude: inspect the actual shell command field (0.208834ms)
+✔ claude: lint only file mutations and surface lint failure (0.124417ms)
+✔ codex: block every protected path, including absolute and normalized paths (0.050125ms)
+✔ codex: permit source edits and reads without approving host permissions (0.046ms)
+✔ codex: reject invalid inputs without leaking payload content (0.041916ms)
+✔ codex: inspect the actual shell command field (0.049375ms)
+✔ codex: lint only file mutations and surface lint failure (0.066208ms)
+✔ antigravity: block every protected path, including absolute and normalized paths (0.065ms)
+✔ antigravity: permit source edits and reads without approving host permissions (0.099666ms)
+✔ antigravity: reject invalid inputs without leaking payload content (0.048875ms)
+✔ antigravity: inspect the actual shell command field (0.047625ms)
+✔ antigravity: lint only file mutations and surface lint failure (0.022125ms)
+✔ copilot: block every protected path, including absolute and normalized paths (0.058209ms)
+✔ copilot: permit source edits and reads without approving host permissions (0.043125ms)
+✔ copilot: reject invalid inputs without leaking payload content (0.059417ms)
+✔ copilot: inspect the actual shell command field (0.026417ms)
+✔ copilot: lint only file mutations and surface lint failure (0.016875ms)
+✔ Codex: inspect all patch headers, including move destinations (0.181708ms)
+✔ resolve symlink ancestors and cwd before checking file writes (0.656959ms)
+✔ Copilot: accept object arguments and VS Code-compatible payloads (0.062542ms)
+✔ registered pre hooks run from a subdirectory and emit native denial JSON (134.7475ms)
+✔ registered post hooks preserve JSON stdout and report a real lint process failure (507.792584ms)
+✔ Markdown agents include discovery metadata and a substantive prompt (1.714041ms)
+✔ Copilot edit aliases deny protected paths (0.086ms)
 ℹ tests 27
 ℹ suites 0
 ℹ pass 27
@@ -137,7 +138,7 @@ $ npm run test:hooks
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 591.878083
+ℹ duration_ms 685.608334
 
 Exit code: 0
 
@@ -146,28 +147,28 @@ $ npm test
 > ai-dev-workflow-blog@1.0.0 test
 > playwright test
 
-[WebServer] (node:96592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (node:40999) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
-[WebServer] (node:96593) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (node:41000) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
 
 Running 4 tests using 4 workers
 
-(node:96632) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:41034) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:96633) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:41032) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:96635) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:41035) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:96634) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:41033) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-  ✓  1 tests/blog.spec.ts:3:5 › 홈페이지에 블로그 제목과 포스트 목록이 렌더링된다 (617ms)
-  ✓  2 tests/tag-filter.spec.ts:34:7 › 블로그 태그 필터링 기능 (Issue #1) › 선택한 태그를 다시 클릭하면 전체 목록과 순서가 복원된다 (721ms)
-  ✓  4 tests/tag-filter.spec.ts:4:7 › 블로그 태그 필터링 기능 (Issue #1) › 전체 태그를 표시하고 AI 필터와 전체 목록 복원을 검증한다 (742ms)
-[WebServer] (node:96677) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  1 tests/blog.spec.ts:3:5 › 홈페이지에 블로그 제목과 포스트 목록이 렌더링된다 (533ms)
+  ✓  4 tests/tag-filter.spec.ts:34:7 › 블로그 태그 필터링 기능 (Issue #1) › 선택한 태그를 다시 클릭하면 전체 목록과 순서가 복원된다 (587ms)
+  ✓  3 tests/tag-filter.spec.ts:4:7 › 블로그 태그 필터링 기능 (Issue #1) › 전체 태그를 표시하고 AI 필터와 전체 목록 복원을 검증한다 (605ms)
+[WebServer] (node:41072) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
-  ✓  3 tests/blog.spec.ts:11:5 › 포스트 클릭 시 상세 페이지로 이동하고 마크다운 콘텐츠가 정상 표시된다 (1.5s)
+  ✓  2 tests/blog.spec.ts:11:5 › 포스트 클릭 시 상세 페이지로 이동하고 마크다운 콘텐츠가 정상 표시된다 (1.4s)
 
-  4 passed (5.7s)
+  4 passed (4.1s)
 
 Exit code: 0

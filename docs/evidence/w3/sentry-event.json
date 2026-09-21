@@ -23,5 +23,14 @@
     "release": "w3-reviewed-verification",
     "dashboardVerified": true,
     "eventUrl": "https://djhobby.sentry.io/issues/7744130498/events/acb2f5ec437d46878c356e24de313c9b/"
+  },
+  "finalBuildEvent": {
+    "result": {
+      "eventId": "fb01fae9128c4e96a32e73f95f11b929",
+      "flushed": true
+    },
+    "release": "w3-final-verification",
+    "dashboardVerified": true,
+    "eventUrl": "https://djhobby.sentry.io/issues/7744130498/events/fb01fae9128c4e96a32e73f95f11b929/"
   }
 }

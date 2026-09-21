@@ -14,6 +14,12 @@ major로 지적했다. 서버 요청 필드만 제거하던 초기 구현을 공
 2026-09-20 차이여서 날짜를 바꾸지 않고 timezone을 명시했다. 아직 계정에서 실제로
 등록하지 않은 경보나 소스맵 업로드를 완료했다고 쓰지 않는다.
 
+추가로 [GitHub PR 리뷰](https://github.com/elwpdl/ai-dev-workflow-blog/pull/4#discussion_r4058849808)는
+breadcrumb의 data.from/data.to에 URL 쿼리가 남는 경로를 지적했다.
+이 지적을 재현하는 회귀 fixture를 추가하고 navigation·HTTP breadcrumb의 from/to/url에서
+쿼리와 fragment를 제거했다. 이 수정 뒤의 신규 AI 재리뷰는 시간당 무료 한도 소진으로
+요청하지 않았으며 로컬 빌드·린트·회귀 검증으로 확인했다.
+
 ## Q2. 테스트가 통과해도 병합하면 안 되는 변경을 걸러낼 수 있나요?
 
 모든 결함을 걸러낸다고 보장할 수 없다. 예를 들어 실제 SDK 전송이 없는 상태에서도

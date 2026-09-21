@@ -23,5 +23,7 @@
     }
   ],
   "uid": "1000",
-  "health": "healthy"
+  "health": "healthy",
+  "imageId": "sha256:ef393aa71160fb8dbfefe1d81133413bd8b6654b88ef4042bd9259bbbe99e8b7",
+  "probeDisabledAfterLatestRecreation": true
 }

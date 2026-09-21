@@ -26,3 +26,21 @@ test("handle events without optional request or stacktrace fields", () => {
   assert.deepEqual(sanitizeEvent({ message: "plain error" }), { message: "plain error" });
   assert.deepEqual(sanitizeEvent({ exception: { values: [{ type: "Error" }] } }), { exception: { values: [{ type: "Error" }] } });
 });
+
+
+test("remove navigation and HTTP breadcrumb query and fragment values without losing diagnostic fields", () => {
+  const event = {
+    breadcrumbs: [
+      { category: "navigation", data: { from: "/reset?token=fixture-reset#secret", to: "https://example.test/profile?email=fixture@example.test#session" } },
+      { category: "fetch", data: { url: "https://example.test/api?api_key=fixture-api", method: "GET", status_code: 500 } },
+      { category: "navigation", data: { from: "/home", to: undefined } },
+      { category: "ui.click", message: "button" },
+    ],
+  };
+  assert.deepEqual(sanitizeEvent(event).breadcrumbs, [
+    { category: "navigation", data: { from: "/reset", to: "https://example.test/profile" } },
+    { category: "fetch", data: { url: "https://example.test/api", method: "GET", status_code: 500 } },
+    { category: "navigation", data: { from: "/home", to: undefined } },
+    { category: "ui.click", message: "button" },
+  ]);
+});

@@ -31,3 +31,12 @@ workflow 성공은 요청 접수만 의미하며 실제 리뷰 완료·지적 �
 - [CodeRabbit CLI](https://docs.coderabbit.ai/cli)
 - [CodeRabbit 리뷰 명령](https://docs.coderabbit.ai/guides/commands)
 - [GitHub Script](https://github.com/actions/github-script)
+
+## 실제 실행 결과
+
+[PR #4 리뷰](https://github.com/elwpdl/ai-dev-workflow-blog/pull/4#pullrequestreview-5262581424)에서
+breadcrumb URL의 민감 쿼리 잔존 지적을 받았고, 공통 필터와 회귀 테스트로 수정했다.
+CLI 리뷰 2회의 지적과 수정 내역은 `docs/evidence/w3/review-resolution.json`에 있다.
+시간당 무료 리뷰 한도 소진 뒤 유료 리뷰를 요청하지 않았다. 마지막 수정은 로컬 검증을
+완료했으며 AI가 최종 수정본까지 재승인했다는 의미는 아니다.
+이 실행은 GitHub App/CLI 리뷰이고 docs/workflows YAML을 Actions에 설치한 실행은 아니다.

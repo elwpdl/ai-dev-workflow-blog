@@ -1,0 +1,24 @@
+{
+  "pullRequest": "https://github.com/elwpdl/ai-dev-workflow-blog/pull/4",
+  "reviews": [
+    {
+      "id": 5262581424,
+      "state": "COMMENTED",
+      "html_url": "https://github.com/elwpdl/ai-dev-workflow-blog/pull/4#pullrequestreview-5262581424",
+      "submitted_at": "2026-09-21T02:07:43Z",
+      "commit_id": "1b077048423a287cb894b5cfd53d1feb5ebbb0a6"
+    }
+  ],
+  "comments": [
+    {
+      "id": 4058849808,
+      "path": "lib/monitoring/sanitize-event.ts",
+      "line": 10,
+      "html_url": "https://github.com/elwpdl/ai-dev-workflow-blog/pull/4#discussion_r4058849808",
+      "finding": "Navigation breadcrumbs retain query and fragment values in data.from/data.to",
+      "resolution": "Strip query and fragment from string from/to/url breadcrumb fields; add navigation and HTTP regression test"
+    }
+  ],
+  "includedReviewsRemaining": 0,
+  "paidReviewRequested": false
+}

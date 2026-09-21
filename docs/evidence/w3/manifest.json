@@ -1,0 +1,15 @@
+{
+  "sha256": {
+    "Dockerfile": "9612335489b14a960509a4d8863314a052573752adaa53f1b0bc2f818ff11ef4",
+    "compose.yaml": "7d7cf354079249353be9a7431e4971b1d9ea7b76181814f25bcac6bd85728893",
+    "app/api/monitoring-test/route.ts": "8c1960845ec50dd89f5b300a3b1d0c5c6898fe69f800987468edda413c376a99",
+    "lib/monitoring/sanitize-event.ts": "b4db2be9e88d7f6f77fc1d24184257d5afc60a425fe56435f702708bf988bad8",
+    "instrumentation-client.ts": "5d49f3d6902201ea4a757faff0e06dac608cb9eef847a7d4204f470918a44f6e",
+    "sentry.server.config.ts": "dda871e98008c604429ed75adbe8f0600f535ad84393c6e9a2c548f3f75b8a78",
+    "sentry.edge.config.ts": "dda871e98008c604429ed75adbe8f0600f535ad84393c6e9a2c548f3f75b8a78",
+    "docs/evidence/w3/validation.txt": "cdcaa69a9a19090f82cea50e1ee51f474e96c1bdb460a92cce864dbe749425e8",
+    "docs/evidence/w3/container-e2e.txt": "26fa8ad1afdfcb2127c324ad564b7eb3b8390f63b7ff53f8249c67296ea5c657"
+  },
+  "baseCommit": "1b077048423a287cb894b5cfd53d1feb5ebbb0a6",
+  "includesUncommittedReviewFix": true
+}

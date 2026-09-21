@@ -33,7 +33,24 @@ Sentry에서 Next.js 프로젝트를 만들고 DSN을 로컬 셸 환경에 제�
 POST `/api/monitoring-test`는 기본 404이며 테스트 플래그와 토큰이 모두 있어야 활성화된다.
 Authorization Bearer 인증 실패는 401, DSN 미설정은 503이다. 인증을 통과하면 고정된 오류를
 throw/catch 후 captureException으로 전송한다. 원본 요청 헤더·쿠키·본문·쿼리와 사용자 정보는
-공통 beforeSend에서 제거한다. 브라우저·서버·edge에 같은 필터를 적용하며 stack frame의 vars와 URL fragment도 제거한다. 오류 메시지나 임의 extra 데이터 전체를 자동 비식별화하는 필터는 아니므로 시크릿을 오류 메시지에 넣지 않는다. 사용자 입력이나 인증 토큰을 오류 메시지에 넣지 않는다.
+공통 beforeSend에서 제거한다. 브라우저·서버·edge에 같은 필터를 적용하며 stack frame의 vars, URL fragment와 breadcrumb의 from/to/url 쿼리·fragment도 제거한다. 오류 메시지나 임의 extra 데이터 전체를 자동 비식별화하는 필터는 아니므로 시크릿을 오류 메시지에 넣지 않는다. 사용자 입력이나 인증 토큰을 오류 메시지에 넣지 않는다.
+
+토큰을 이미 환경에 지정하고 테스트 플래그를 켠 컨테이너에서 다음 명령으로 전송을 재현한다.
+토큰을 명령 인수나 로그로 출력하지 않으며 1회만 전송한다.
+
+```bash
+node --input-type=module <<'JS'
+const token = process.env.SENTRY_TEST_TOKEN;
+if (!token) throw new Error("SENTRY_TEST_TOKEN is required");
+const response = await fetch("http://127.0.0.1:3100/api/monitoring-test", {
+  method: "POST",
+  headers: { authorization: `Bearer ${token}` },
+});
+if (!response.ok) throw new Error(`Probe failed: HTTP ${response.status}`);
+const { eventId, flushed } = await response.json();
+console.log({ eventId, flushed });
+JS
+```
 
 응답 eventId를 Sentry Issues의 이벤트 ID와 대조하고 이슈 URL·환경·수집 시각을 증거로 남긴다.
 flushed=true는 SDK의 전송 큐 처리 완료이지 대시보드 인덱싱의 증거가 아니다.
