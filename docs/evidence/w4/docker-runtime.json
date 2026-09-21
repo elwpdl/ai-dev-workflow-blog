@@ -1,0 +1,11 @@
+{
+  "url": "http://127.0.0.1:3101",
+  "image": "ai-dev-workflow-blog:w4",
+  "homeStatus": 200,
+  "searchTitles": [
+    "Hello World: AI Dev Workflow 블로그 시작하기"
+  ],
+  "probeStatus": 404,
+  "pageErrors": [],
+  "sentryCloudVerification": "Not repeated in W4; no DSN in verification container"
+}

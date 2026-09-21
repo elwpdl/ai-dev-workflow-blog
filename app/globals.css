@@ -329,3 +329,50 @@ main {
   padding: 0;
   background: none;
 }
+
+/* Post search */
+.post-search {
+  margin-bottom: 1rem;
+}
+
+.post-search label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.search-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.search-controls input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.65rem 0.75rem;
+  font: inherit;
+  color: var(--fg);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+.search-controls button {
+  flex-shrink: 0;
+}
+
+.search-controls button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.search-controls input:focus-visible,
+.filter-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.search-count {
+  color: var(--muted);
+  margin-bottom: 1rem;
+}

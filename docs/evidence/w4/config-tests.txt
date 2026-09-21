@@ -1,0 +1,19 @@
+
+> ai-dev-workflow-blog@1.0.0 test:agent-config
+> node --test scripts/agent-config.test.mjs
+
+✔ shared skill new-post has matching provider copies (4.008833ms)
+✔ shared skill review-changes has matching provider copies (0.590333ms)
+✔ shared skill e2e-testing has matching provider copies (0.408292ms)
+✔ reviewer references an existing common role on every provider (0.462958ms)
+✔ qa-tester references an existing common role on every provider (0.405625ms)
+✔ MCP registrations share one launcher (0.676959ms)
+✔ MCP launcher rejects missing credentials and forwards token precedence without printing tokens (245.585958ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 297.314292

@@ -1,0 +1,14 @@
+Command: npm test -- --grep 'AC1: 제목'
+Base application: acc697df89c73a03b64d0cdd3028e2d0be78c4d8, with new tests/search.spec.ts before implementation.
+Exit code: 1 (confirmed from process result).
+The original /tmp log did not persist across the resumed session. Below is the tool-output excerpt captured during that run, not a reconstructed full log.
+
+1) tests/search.spec.ts:3:5 › AC1: 제목·요약·태그를 대소문자와 주변 공백에 관계없이 검색한다
+Test timeout of 30000ms exceeded.
+Error: locator.fill: Test timeout of 30000ms exceeded.
+Call log:
+  - waiting for getByRole('searchbox', { name: '게시글 검색' })
+> 7 | await search.fill("  hELLo wORLd  ");
+1 failed
+
+This was a real pre-implementation execution in the current W4 cycle, not a historical-commit replay. The test failed because the search input was absent. Green is in green.txt.

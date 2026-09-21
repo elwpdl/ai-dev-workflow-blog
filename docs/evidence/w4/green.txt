@@ -1,0 +1,34 @@
+
+> ai-dev-workflow-blog@1.0.0 test
+> playwright test
+
+[WebServer] (node:15779) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:15780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 9 tests using 5 workers
+
+(node:15797) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15799) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15795) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15798) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15796) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  5 tests/blog.spec.ts:3:5 › 홈페이지에 블로그 제목과 포스트 목록이 렌더링된다 (530ms)
+  ✓  4 tests/search.spec.ts:3:5 › AC1: 제목·요약·태그를 대소문자와 주변 공백에 관계없이 검색한다 (571ms)
+  ✓  1 tests/search.spec.ts:16:5 › AC2·AC3: 검색과 태그를 조합하고 검색만 초기화한다 (814ms)
+  ✓  6 tests/search.spec.ts:56:7 › AC4: 390px에서 키보드 검색과 초기화가 동작한다 (383ms)
+  ✓  7 tests/search.spec.ts:56:7 › AC4: 1280px에서 키보드 검색과 초기화가 동작한다 (362ms)
+  ✓  8 tests/tag-filter.spec.ts:4:7 › 블로그 태그 필터링 기능 (Issue #1) › 전체 태그를 표시하고 AI 필터와 전체 목록 복원을 검증한다 (300ms)
+  ✓  9 tests/tag-filter.spec.ts:34:7 › 블로그 태그 필터링 기능 (Issue #1) › 선택한 태그를 다시 클릭하면 전체 목록과 순서가 복원된다 (272ms)
+[WebServer] (node:15845) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 tests/blog.spec.ts:11:5 › 포스트 클릭 시 상세 페이지로 이동하고 마크다운 콘텐츠가 정상 표시된다 (1.4s)
+  ✓  3 tests/search.spec.ts:45:5 › AC1·AC6: 기호는 정규식이 아닌 문자로 처리하고 검색 결과에서 상세로 이동한다 (1.4s)
+
+  9 passed (3.1s)
