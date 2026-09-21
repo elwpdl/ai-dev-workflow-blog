@@ -1,0 +1,45 @@
+{
+  "tool": "CodeRabbit CLI 0.7.6",
+  "firstReview": {
+    "major": 2,
+    "minor": 1
+  },
+  "followUpReview": {
+    "major": 0,
+    "minor": 2
+  },
+  "dispositions": [
+    {
+      "finding": "Client request URL/query exposure",
+      "status": "fixed",
+      "evidence": "Shared sanitizeEvent + sanitizer regression tests"
+    },
+    {
+      "finding": "Exception stack frame local variables",
+      "status": "fixed",
+      "evidence": "Remove frame.vars across all exceptions and runtimes"
+    },
+    {
+      "finding": "Local absolute working directory in evidence",
+      "status": "fixed",
+      "evidence": "Replace workingDirectory with repository-relative dot"
+    },
+    {
+      "finding": "Evidence date appears in future compared to UTC date",
+      "status": "not-applicable",
+      "evidence": "Evidence dates use Asia/Seoul. 2026-09-20 15:00 UTC is 2026-09-21 00:00 KST. Timezone is explicit."
+    },
+    {
+      "finding": "Navigation breadcrumb URLs retain sensitive query values",
+      "status": "fixed",
+      "evidence": "Shared URL filtering on breadcrumb from/to/url fields and dedicated regression fixture"
+    }
+  ],
+  "paidCreditsFlagUsed": false,
+  "capturedAtUtc": "2026-09-21T01:59:13.112133+00:00",
+  "githubReview": {
+    "major": 1,
+    "reviewUrl": "https://github.com/elwpdl/ai-dev-workflow-blog/pull/4#pullrequestreview-5262581424",
+    "status": "Finding fixed and locally regression tested; fresh AI rereview not requested because the free hourly allowance is exhausted"
+  }
+}

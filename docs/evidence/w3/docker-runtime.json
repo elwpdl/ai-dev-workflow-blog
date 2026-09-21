@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-09-21",
+  "http": [
+    {
+      "path": "/",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/...css",
+      "status": 200
+    },
+    {
+      "path": "/blog/hello-world",
+      "status": 200
+    },
+    {
+      "path": "/blog/does-not-exist",
+      "status": 404
+    },
+    {
+      "path": "POST /api/monitoring-test (disabled)",
+      "status": 404
+    }
+  ],
+  "uid": "1000",
+  "health": "healthy",
+  "imageId": "sha256:ef393aa71160fb8dbfefe1d81133413bd8b6654b88ef4042bd9259bbbe99e8b7",
+  "probeDisabledAfterLatestRecreation": true
+}

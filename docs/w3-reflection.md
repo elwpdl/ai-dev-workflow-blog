@@ -1,0 +1,41 @@
+# W3 근거형 질문 답변
+
+## Q1. AI 리뷰가 찾아낸 유의미한 지적은 무엇인가요?
+
+CodeRabbit은 브라우저 SDK의 URL 쿼리 미제거와 서버 stack frame의 vars 잔존 가능성을
+major로 지적했다. 서버 요청 필드만 제거하던 초기 구현을 공통 sanitizeEvent 함수로
+정리해 브라우저·서버·edge에 적용하고, 모든 exception의 frame.vars와 URL 쿼리·fragment,
+요청 헤더·쿠키·본문·사용자 정보를 제거하는 회귀 테스트를 추가했다.
+오류 메시지·태그·파일·행 등 진단 정보는 유지한다. [리뷰 원본](evidence/w3/coderabbit-review.jsonl).
+
+재리뷰에서 major 지적은 0개였고 로컬 절대 경로 노출 지적은 workingDirectory를 `.`으로 바꿔 반영했다. [처리 내역](evidence/w3/review-resolution.json).
+
+증거 checkedAt 날짜가 미래라는 minor 지적은 Asia/Seoul의 2026-09-21과 UTC의
+2026-09-20 차이여서 날짜를 바꾸지 않고 timezone을 명시했다. 아직 계정에서 실제로
+등록하지 않은 경보나 소스맵 업로드를 완료했다고 쓰지 않는다.
+
+추가로 [GitHub PR 리뷰](https://github.com/elwpdl/ai-dev-workflow-blog/pull/4#discussion_r4058849808)는
+breadcrumb의 data.from/data.to에 URL 쿼리가 남는 경로를 지적했다.
+이 지적을 재현하는 회귀 fixture를 추가하고 navigation·HTTP breadcrumb의 from/to/url에서
+쿼리와 fragment를 제거했다. 이 수정 뒤의 신규 AI 재리뷰는 시간당 무료 한도 소진으로
+요청하지 않았으며 로컬 빌드·린트·회귀 검증으로 확인했다.
+
+## Q2. 테스트가 통과해도 병합하면 안 되는 변경을 걸러낼 수 있나요?
+
+모든 결함을 걸러낸다고 보장할 수 없다. 예를 들어 실제 SDK 전송이 없는 상태에서도
+앱 응답과 E2E는 통과할 수 있으므로 event ID를 Sentry 대시보드에서 별도로 대조했다.
+환경 변수와 테스트 토큰은 저장소에 넣지 않고, 의도적 오류 endpoint는 기본 404로
+막았으며 인증 없는 요청·잘못된 토큰·DSN 없음도 검증했다.
+
+AI 리뷰는 추가 확인 수단이다. review 요청 workflow 성공은 요청 코멘트 작성 성공일 뿐
+리뷰 완료나 병합 승인이 아니다. 현재 보호된 .github/workflows는 변경하지 않았다.
+
+## Q3. 어떤 지표와 경보 기준을 먼저 보나요?
+
+첫 오류 유형 1건, 같은 오류 5분 내 5건, 30초 간격 HTTP 검사 3회 연속 실패를 우선 확인한다.
+이 값은 저트래픽 실습의 초기 기준이며 실제 운영 SLO가 아니다.
+오류의 환경·release·발생 경로를 확인하고 사용자 영향이 있으면 배포 중단·롤백을 검토한다.
+
+무료 사용을 위해 성능 tracing·Replay·로그 수집·소스맵 업로드는 활성화하지 않았다.
+실제 자동 알림 규칙을 Sentry 계정에 등록하지는 않았으며 지표·실행 절차와 요금제 한계를
+[관측 문서](w3-observability.md)에 정리했다.

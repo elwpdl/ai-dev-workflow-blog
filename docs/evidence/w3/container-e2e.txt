@@ -1,0 +1,23 @@
+
+> ai-dev-workflow-blog@1.0.0 test:container
+> playwright test --config playwright.container.config.ts
+
+
+Running 4 tests using 4 workers
+
+(node:41339) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:41341) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:41342) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:41340) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/blog.spec.ts:3:5 › 홈페이지에 블로그 제목과 포스트 목록이 렌더링된다 (620ms)
+  ✓  3 tests/tag-filter.spec.ts:34:7 › 블로그 태그 필터링 기능 (Issue #1) › 선택한 태그를 다시 클릭하면 전체 목록과 순서가 복원된다 (651ms)
+  ✓  4 tests/blog.spec.ts:11:5 › 포스트 클릭 시 상세 페이지로 이동하고 마크다운 콘텐츠가 정상 표시된다 (692ms)
+  ✓  2 tests/tag-filter.spec.ts:4:7 › 블로그 태그 필터링 기능 (Issue #1) › 전체 태그를 표시하고 AI 필터와 전체 목록 복원을 검증한다 (719ms)
+
+  4 passed (1.1s)
+
+Exit code: 0
