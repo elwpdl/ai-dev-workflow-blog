@@ -11,7 +11,8 @@
     "test:hooks": "node --test scripts/agent-hooks.test.mjs",
     "test:agent-config": "node --test scripts/agent-config.test.mjs",
     "test:monitoring": "node --test scripts/monitoring-sanitizer.test.mjs && node scripts/verify-monitoring.mjs",
-    "test:container": "playwright test --config playwright.container.config.ts"
+    "test:container": "playwright test --config playwright.container.config.ts",
+    "verify": "npm run lint && npm run build && npm test"
   },
   "dependencies": {
     "@sentry/nextjs": "^10.75.0",

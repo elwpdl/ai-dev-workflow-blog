@@ -11,18 +11,6 @@
           }
         ]
       }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"$(git rev-parse --show-toplevel)/.claude/hooks/post-tool-use.sh\"",
-            "timeout": 120
-          }
-        ]
-      }
     ]
   }
 }

@@ -98,3 +98,9 @@ npm run test:container
 Sentry 연결, 무료 운영 범위, 환경 변수와 검증 방법은 [관측 문서](docs/w3-observability.md),
 실제 검증 결과는 [W3 증거](docs/evidence/w3/README.md)를 참고합니다.
 컨테이너를 멈추려면 `docker compose stop`을 사용합니다.
+
+### 작업 완료 검증
+
+`npm run verify`로 lint → build → E2E를 실행한 후 작업을 완료합니다.
+PostToolUse의 매 편집 lint는 사용하지 않으며 기존 pre-commit lint는 유지합니다.
+설정 변경 시 `npm run test:hooks`와 `npm run test:agent-config`도 실행합니다.

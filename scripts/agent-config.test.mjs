@@ -60,3 +60,9 @@ test('MCP launcher rejects missing credentials and forwards token precedence wit
     rmSync(temporary, { recursive: true, force: true });
   }
 });
+
+test('completion command runs lint, build and E2E in order while pre-commit keeps lint', () => {
+  assert.equal(JSON.parse(read('package.json')).scripts.verify, 'npm run lint && npm run build && npm test');
+  assert.ok(read('AGENTS.md').includes('npm run verify'));
+  assert.ok(read('.githooks/pre-commit').includes('npm run lint'));
+});

@@ -1,7 +1,6 @@
 import { readFileSync, realpathSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { spawnSync } from "node:child_process";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const editors = new Set([
@@ -10,7 +9,6 @@ const editors = new Set([
   "replace_string_in_file", "multi_replace_string_in_file", "insert_edit_into_file",
 ]);
 const shells = new Set(["bash", "powershell", "run_command", "exec_command"]);
-const sourceFile = /\.(?:[cm]?[jt]sx?)$/i;
 
 function object(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
@@ -44,6 +42,7 @@ function editedPaths(name, args) {
     if (paths.length === 0) throw new Error("Patch has no file headers.");
     return paths;
   }
+  if (["str_replace_editor", "str_replace"].includes(name) && args.command === "view") return [];
   if (!editors.has(name)) return [];
   if (Array.isArray(args.replacements)) {
     if (args.replacements.length === 0) throw new Error("Empty edit list.");
@@ -71,6 +70,43 @@ function protectedPath(target) {
     (part === ".github" && parts[index + 1] === "workflows"));
 }
 
+// Deliberately limited grammar: never execute a command to classify it.
+// Compound commands, expansions and unknown options must use a native read tool.
+function isReadOnlyShell(command) {
+  if (/[\n\r;&|<>`$(){}\\]/.test(command)) return false;
+  const tokens = [];
+  const word = /(?:[^\s"']+|"[^"']*"|'[^']*')+/y;
+  let offset = 0;
+  while (offset < command.length) {
+    if (/\s/.test(command[offset])) { offset += 1; continue; }
+    word.lastIndex = offset;
+    const match = word.exec(command);
+    if (!match) return false;
+    tokens.push(match[0].replace(/["']/g, ""));
+    offset = word.lastIndex;
+  }
+  if (!tokens.length) return false;
+  const executable = tokens.shift();
+  if (executable.includes("/") && !/^\/(?:usr\/)?bin\/[^/]+$/.test(executable)) return false;
+  const name = path.basename(executable);
+  const options = {
+    cat: /^(?:-[AbEnstTuv]+|--(?:number|number-nonblank|show-all))$/,
+    head: /^(?:-[nqc]+|-[0-9]+|--(?:lines|bytes)(?:=\d+)?)$/,
+    tail: /^(?:-[nqc]+|-[0-9]+|--(?:lines|bytes)(?:=\d+)?)$/,
+    wc: /^-[clmwL]+$/,
+    ls: /^-[aAdFhlnprRt1]+$/,
+    stat: /^-[fLtx]+$/,
+    grep: /^(?:-[EinvclHhFwoxq]+|--(?:line-number|ignore-case|fixed-strings))$/,
+    rg: /^(?:-[nliIcHFwovq]+|--(?:files|hidden|no-ignore|line-number|ignore-case|fixed-strings))$/,
+  };
+  if (!options[name]) return false;
+  let positionalOnly = false;
+  return tokens.every((token) => {
+    if (token === "--") { positionalOnly = true; return true; }
+    return positionalOnly || !token.startsWith("-") || options[name].test(token);
+  });
+}
+
 function denyReason(call, paths) {
   for (const target of paths) {
     const absolute = path.resolve(requiredString(call.cwd), target);
@@ -82,9 +118,9 @@ function denyReason(call, paths) {
     const command = requiredString(call.args.command ?? call.args.CommandLine);
     // Conservative literal-path check, not a shell interpreter or sandbox.
     // Strip shell quoting to also detect adjacent quoted fragments.
-    const literal = command.replace(/["'\\]/g, "");
-    if (/(?:^|[\s/;=<>({])(?:\.env[^\s/;]*|\.git(?:[\s/;)]|$)|\.github\/workflows(?:[\s/;)]|$)|package-lock\.json(?:[\s/;)]|$))/i.test(literal)) {
-      return "Shell command references a protected path. Use a read tool for inspection and npm for lockfile updates.";
+    const literal = command.replace(/["'`\\]/g, "");
+    if (!isReadOnlyShell(command) && /(?:^|[\s/;=<>({])(?:\.env[^\s/;]*|\.git(?:[\s/;)]|$)|\.github\/workflows(?:[\s/;)]|$)|package-lock\.json(?:[\s/;)]|$))/i.test(literal)) {
+      return "Protected path write or unclassified shell command. Use a simple read-only command or a native read tool; use npm for lockfile updates.";
     }
   }
   return null;
@@ -104,47 +140,19 @@ function preResult(provider, reason) {
   } };
 }
 
-function postResult(provider, message) {
-  if (!message || provider === "antigravity") return {};
-  if (provider === "copilot") return { additionalContext: message };
-  return { hookSpecificOutput: { hookEventName: "PostToolUse", additionalContext: message } };
-}
-
-export function handleHook(provider, phase, payload, runLint = lint) {
+export function handleHook(provider, phase, payload) {
   if (!["claude", "codex", "antigravity", "copilot"].includes(provider) || !["pre", "post"].includes(phase)) {
     throw new Error("Unknown hook provider or phase.");
   }
+  // Backward compatibility for previously loaded sessions: no subprocess or lint.
+  if (phase === "post") return { output: {}, status: 0 };
   try {
     const call = decode(provider, payload);
-    const paths = editedPaths(call.name, call.args);
-    if (phase === "pre") return { output: preResult(provider, denyReason(call, paths)), status: 0 };
-    if (!paths.some((target) => sourceFile.test(target))) return { output: {}, status: 0 };
-    const result = runLint();
-    const message = result.ok ? null : "PostToolUse lint failed. Run npm run lint and fix the reported errors before completing the task.";
-    return {
-      output: postResult(provider, message),
-      status: message && provider === "antigravity" ? 1 : 0,
-      diagnostic: message ? `${message}\n${result.diagnostic ?? ""}` : undefined,
-    };
+    return { output: preResult(provider, denyReason(call, editedPaths(call.name, call.args))), status: 0 };
   } catch {
-    // Never echo raw tool input: commands and edited content can contain secrets.
     const message = "Hook input could not be validated. Check the tool payload and hook configuration.";
-    return {
-      output: phase === "pre" ? preResult(provider, message) : postResult(provider, message),
-      status: phase === "post" && provider === "antigravity" ? 1 : 0,
-      diagnostic: message,
-    };
+    return { output: preResult(provider, message), status: 0, diagnostic: message };
   }
-}
-
-function lint() {
-  const result = spawnSync("npm", ["run", "lint"], {
-    cwd: projectRoot, encoding: "utf8", timeout: 90_000, maxBuffer: 1024 * 1024,
-  });
-  return {
-    ok: result.status === 0,
-    diagnostic: result.error ? "Lint could not start or exceeded its timeout." : `${result.stdout ?? ""}${result.stderr ?? ""}`,
-  };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

@@ -44,7 +44,7 @@ MCP 등록 이름은 `repo-github`이며 기존 `@modelcontextprotocol/server-gi
 | Antigravity 2.0 MCP 발견 | 공통 MCP 형식을 제공하되 2.0 UI의 Installed MCP Servers에서 실제 로드를 확인해야 한다. CLI의 프로젝트 파일 발견과 동일하게 동작한다고 검증하지 않았다. |
 | Pre hook 허용 | Claude·Codex·Copilot의 빈 응답은 기존 권한 판단을 유지한다. Antigravity decision allow는 같은 의미의 권한 유보가 아니다. |
 | 플러그인 | 활성 커스텀 플러그인 없음. 이전 Antigravity 예시는 `docs/examples/antigravity-plugin.json`으로 이동했다. 패키징은 제품 간 호환되지 않는다. |
-| 저장·커밋 hook | 공통 onSave/preCommit 기능을 구성하지 않는다. 도구 호출 전후 hook과 완료 검증을 사용한다. 이번 설정 동기화에서 Git hook을 새로 설치하지 않았다. 기존 `.githooks/pre-commit`과 로컬 `core.hooksPath=.githooks`는 별도로 존재하며 커밋 전 보호 경로 검사와 린트를 실행한다. |
+| 저장·커밋 hook | 공통 onSave/preCommit 기능을 구성하지 않는다. PreToolUse와 작업 완료 검증을 사용한다. 이번 설정 동기화에서 Git hook을 새로 설치하지 않았다. 기존 `.githooks/pre-commit`과 로컬 `core.hooksPath=.githooks`는 별도로 존재하며 커밋 전 보호 경로 검사와 린트를 실행한다. |
 
 ## Hook 파일과 실행 방식
 
@@ -53,10 +53,10 @@ MCP 등록 이름은 `repo-github`이며 기존 `@modelcontextprotocol/server-gi
 | Claude Code | `.claude/settings.json` | `.claude/agents/reviewer.agent.md` | `.claude/agents/qa-tester.md` |
 | Codex | `.codex/hooks.json` | `.codex/agents/reviewer.toml` | `.codex/agents/qa-tester.toml` |
 | Antigravity CLI·2.0 | `.agents/hooks.json` | `.agents/agents/reviewer.agent.md` | `.agents/agents/qa-tester.md` |
-| Copilot CLI | `.github/hooks/validation.json`, `formatting.json` | `.github/agents/reviewer.agent.md` | `.github/agents/qa-tester.agent.md` |
+| Copilot CLI | `.github/hooks/validation.json` (`formatting.json`은 빈 등록) | `.github/agents/reviewer.agent.md` | `.github/agents/qa-tester.agent.md` |
 
 Node.js와 npm, Bash, Git을 사용할 수 있는 macOS/Linux 환경을 전제로 한다.
-각 도구의 등록 형식과 응답 형식은 분리하고, 실제 입력 파싱·경로 검사·린트는
+각 도구의 등록 형식과 응답 형식은 분리하고, 실제 입력 파싱·경로 검사는
 `scripts/agent-hooks.mjs`에서 수행한다. 스크립트 위치를 기준으로 저장소 루트를
 찾으므로 하위 디렉터리에서 실행해도 같은 프로젝트를 검사한다.
 
@@ -72,22 +72,34 @@ Node.js와 npm, Bash, Git을 사용할 수 있는 macOS/Linux 환경을 전제�
 차단한다. 상대 경로와 존재하는 심볼릭 링크의 실제 경로도 확인한다.
 읽기 도구는 수정으로 취급하지 않는다.
 
-셸 hook은 명령에 명시된 보호 경로를 보수적으로 차단한다. 셸로 보호 파일을
-읽으려는 명령도 차단될 수 있으므로 읽기 도구를 사용한다. `npm install`처럼
-보호 경로를 직접 지정하지 않는 npm 명령은 이 검사에서 거부하지 않는다.
+셸에서는 `cat`, `head`, `tail`, `wc`, `ls`, `stat`, `grep`, `rg`의 단순 읽기
+명령과 제한된 읽기 옵션을 허용한다. 예: `cat .git/config`, `head -n 20 package-lock.json`,
+`rg -n name package-lock.json`. `str_replace_editor`의 `command=view`도 읽기로 취급한다.
+읽기 허용이 시크릿 출력 허용을 뜻하지는 않는다. 민감한 값은 응답·로그에 노출하지 않는다.
 
-이 검사는 보조 안전장치이며 샌드박스가 아니다. 변수·글롭·인코딩·외부 스크립트로
-간접 접근하는 셸 명령, 알 수 없는 MCP 쓰기 도구, hook 자체의 변경까지 통제하지는
-않는다. 도구의 권한·샌드박스 설정을 함께 유지한다.
+보호 경로를 포함하는 쓰기, 리다이렉션, 파이프, 명령 연결·치환, 실행형 옵션 및
+분류할 수 없는 명령은 차단한다. 복합 읽기가 필요하면 명령을 나누거나 네이티브 읽기
+도구를 사용한다. `npm install`처럼 보호 경로를 직접 지정하지 않는 npm 명령은 거부하지 않는다.
+이 검사는 보조 안전장치이며 샌드박스가 아니다. 변수·글롭·외부 스크립트로 간접 접근하는
+셸 명령, 명령 이름을 가리는 alias/함수/PATH, 알 수 없는 MCP 쓰기 도구까지 통제하지 않는다.
 
-Post hook은 파일 편집/patch 대상에 JS·TS 계열 파일이 있을 때 저장소의
-`npm run lint`를 한 번 실행한다. 읽기나 일반 셸 호출, Markdown 수정에는 실행하지
-않는다. 셸로 수정한 파일은 완료 검증에서 별도로 확인한다.
+## 검증 실행 시점
 
-린트 실패는 stderr에 보고한다. Claude/Codex에는 `additionalContext`, Copilot에는
-`additionalContext`를 반환한다. Antigravity Post hook은 `{}`만 반환해야 하므로
-stderr와 종료 코드 1로 실패를 알린다. 이미 수행한 편집을 되돌리거나 다음 도구
-호출을 반드시 차단하는 기능은 아니다. 자동 `--fix`는 실행하지 않는다.
+- **PreToolUse**: 보호 경로 쓰기 검사. 읽기 도구와 허용된 단순 읽기 셸 명령은 통과한다.
+- **PostToolUse**: 모든 제품의 등록에서 제거했다. 기존 세션이 예전 wrapper를 호출해도
+  공통 어댑터는 즉시 빈 응답으로 종료하고 lint나 다른 프로세스를 실행하지 않는다.
+  현재 formatter가 없으므로 새 포맷터나 의존성은 추가하지 않았다.
+- **작업 완료 전**: 공통 AGENTS.md 지침에 따라 `npm run verify`를 실행한다.
+  lint → build → E2E 순서이며 실패 시 다음 단계로 진행하지 않는다. 설정 변경에는
+  `npm run test:hooks`와 `npm run test:agent-config`도 실행한다.
+- **커밋 직전**: 기존 `.githooks/pre-commit`의 보호 경로 검사와 lint를 그대로 유지한다.
+
+`verify`는 에이전트가 완료 전에 실행하는 공통 절차다. 자동 Stop/SessionEnd Hook은
+등록하지 않았다. 응답 종료·질문·중단과 작업 완료를 동일하게 취급하지 않으며, 이 지침이
+모든 제품에서 자동 실행을 강제한다는 뜻은 아니다. 변경 후 새 세션에서 등록을 다시 확인한다.
+
+W1 및 W4 증거에 있는 PostToolUse lint 로그는 당시 실행 이력이다. 현재 정책은 이 절과
+AGENTS.md를 기준으로 하며 과거 증거를 새 설정의 동작 증거로 사용하지 않는다.
 
 ## 적용 확인
 

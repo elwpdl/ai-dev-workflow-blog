@@ -53,7 +53,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## 3. 핵심 실행 명령어 (모든 에이전트 공통)
 
-작업 전후에는 반드시 아래 명령어를 실행하여 코드 품질과 동작을 검증해야 합니다.
+작업을 완료하기 전 `npm run verify`로 전체 lint → build → E2E를 순서대로 실행합니다.
+검증 실패를 수정한 뒤 다시 확인하고, 통과하기 전 완료로 보고하지 않습니다.
+파일 수정마다 전체 검증을 반복하지 않습니다. 아래 개별 명령은 개발·진단 시 사용합니다.
 
 ```bash
 # 로컬 개발 서버 실행

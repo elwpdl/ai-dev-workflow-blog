@@ -1,13 +1,4 @@
 {
   "version": 1,
-  "hooks": {
-    "postToolUse": [
-      {
-        "type": "command",
-        "bash": "node \"$(git rev-parse --show-toplevel)/scripts/agent-hooks.mjs\" copilot post",
-        "cwd": ".",
-        "timeoutSec": 120
-      }
-    ]
-  }
+  "hooks": {}
 }
