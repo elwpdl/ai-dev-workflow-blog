@@ -132,14 +132,16 @@ npm test
 ```
 
 Hook 테스트는 실제 설정의 명령을 하위 디렉터리에서 실행하고, 보호 경로 거부,
-정상 편집·읽기, Codex 다중 파일 patch, symlink, 잘못된 입력, 린트 실패의 네이티브
-응답을 검사한다. 테스트 통과는 각 제품의 로그인·프로젝트 신뢰·hook 신뢰
+정상 편집·읽기, Codex 다중 파일 patch, symlink, 잘못된 입력,
+미등록 Post hook의 비실행을 검사한다. 테스트 통과는 각 제품의 로그인·프로젝트 신뢰·hook 신뢰
 상태까지 보장하지 않는다.
 
 설정 테스트는 스킬 복사본 일치, 네이티브 agent의 공통 역할 참조, MCP 등록과 launcher의
 토큰 우선순위를 검사한다. 설정 단위 테스트의 MCP는 가짜 npx로 검증한다. 별도의 W2 실연결 검증에서는 공통 launcher로 초기화·도구 조회·GitHub 이슈 #1 읽기에 성공했다(`docs/evidence/w2/mcp-live-response.json`). 이는 각 제품 UI의 MCP 로드 검증과 구분한다.
-설치된 모든 제품에서 실제 agent 호출을 완료했다는 의미는 아니다. Claude/Copilot CLI 실행과
-Antigravity 2.0 UI 로드는 미검증이며, Codex의 프로젝트 신뢰·hook 신뢰도 사용자 환경에서 확인해야 한다.
+설치된 모든 제품에서 실제 agent 호출을 완료했다는 의미는 아니다.
+2026-09-23 Codex CLI의 실제 호스트 호출 결과와 남은 신뢰 설정은
+[Hook 실호출 검증](evidence/hook-host-verification.md)에 기록했다.
+Claude/Copilot CLI 및 Antigravity CLI·2.0의 실호출은 미검증이다.
 
 ## 공식 문서
 
